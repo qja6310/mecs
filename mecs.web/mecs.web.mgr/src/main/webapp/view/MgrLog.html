@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 15px;right:15px; top: 5px;">
+			<div class="layui-form-item">
+				<label class="layui-form-label">操作人</label>
+				<div class="layui-input-inline" style="width: 220px;">
+					<input type="text" name="username" id="userName"
+					style="width: 200px; height: 30px;"	lay-verify="required" placeholder="操作人" autocomplete="off"
+						class="layui-input">
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">操作时间</label>
+					<div class="layui-input-inline" style="width: 220px;">
+						<input type="text" name="date" id="date1" autocomplete="off"
+						style="width: 200px; height: 30px;"	placeholder="请输入开始时间" class="layui-input">
+					</div>
+					<div class="layui-form-mid">至</div>
+					<div class="layui-input-inline" style="width: 220px;">
+						<input type="text" name="date2" id="date3" autocomplete="off"
+						style="width: 200px; height: 30px;"	placeholder="请输入结束时间" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<button class="layui-btn layuiadmin-btn-admin layui-btn-sm" lay-submit
+						id="search" lay-filter="LAY-user-back-search" style="width: 80px;margin-top: -7%;">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+					</button>
+				</div>
+					<button type="button" class="layui-btn layui-btn-danger layui-btn-sm"
+					id="clean"	style="width: 80px;margin-top: -1%;">清空</button>
+				
+			</div>
+			<!--//表格内容-->
+			<div class="layui-form">
+				<table class="layui-table"  id="mgrLogTable" lay-filter="mgrLogTable" >
+				</table>
+			</div>
+		</div>
+	</div>
+	<script type="text/html" id="toolbardemo">
+ 	 <div class="layui-btn-container">
+   		 <button class="layui-btn layui-btn-danger layui-btn-sm"  style="width: 60px;"  lay-event="getCheckData">删除</button>
+ 	 </div>
+	</script>
+	<script src="../3rd/layui/layui.js"></script>
+	<script src="../3rd/js/jquery.min.js"></script>
+	<script src="../js/MgrLog.js"></script>
+	<script type="text/javascript"></script>
+</body>
+</html>

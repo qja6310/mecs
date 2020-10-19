@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.AddAccountLog">
+	<insert id="insertAccount" parameterType="mecs.camel.model.Account">	
+		INSERT INTO T_ACCOUNT VALUES
+		(SEQ_ACC.NEXTVAL,#{cardNum},#{accType},#{accDescribe},#{accMoney},NUll,SYSDATE)
+	</insert>
+</mapper>

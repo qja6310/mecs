@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.WelcomeMapper">
+
+	<select id="getSellCardNum" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_CARD WHERE CA_STATE = 1
+	</select>
+
+	<select id="getUserNum" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_USER
+	</select>
+
+	<select id="getTurnover" resultType="java.lang.String">
+		SELECT NVL(SUM(IR_ITS_PRICE),0) FROM T_ITEMS_RECORD WHERE IR_STATE = 3 OR
+		IR_STATE = 5
+	</select>
+
+	<select id="getUsableCardNum" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_CARD WHERE CA_STATE != 1
+	</select>
+
+	<select id="getSell" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_CARD WHERE
+		CA_UPDATE_DATE &gt;=
+		TO_DATE(#{firstday},'YYYY-MM-DD')
+		AND CA_UPDATE_DATE &lt;= TO_DATE(#{currDate},'YYYY-MM-DD')
+	</select>
+
+	<select id="getUser" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_USER WHERE
+		US_CREATE_TIME &gt;=
+		TO_DATE(#{firstday},'YYYY-MM-DD')
+		AND US_CREATE_TIME &lt;= TO_DATE(#{currDate},'YYYY-MM-DD')
+	</select>
+
+	<select id="getTurnoverM" resultType="java.lang.String">
+		SELECT NVL(SUM(IR_ITS_PRICE),0) FROM T_ITEMS_RECORD
+		WHERE (IR_STATE = 3 AND IR_UPDATE_TIME &gt;= TO_DATE(#{firstday},'YYYY-MM-DD')
+		AND IR_UPDATE_TIME &lt;= TO_DATE(#{currDate},'YYYY-MM-DD')
+		)OR (IR_STATE = 5 AND IR_UPDATE_TIME &gt;= TO_DATE(#{firstday},'YYYY-MM-DD')
+		AND IR_UPDATE_TIME &lt;= TO_DATE(#{currDate},'YYYY-MM-DD'))
+	</select>
+</mapper>

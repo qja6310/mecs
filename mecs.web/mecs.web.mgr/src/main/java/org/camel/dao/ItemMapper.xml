@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.ItemMapper">
+
+	<resultMap type="mecs.camel.model.Item" id="itemResultMap">
+		<result column="IT_ID" property="itemId" />
+		<result column="IT_NAME" property="itemName" />
+		<result column="IT_UNIT" property="itemUnit" />
+		<result column="IT_MEMO" property="itemMemo" />
+		<result column="IT_CREATE_TIME" property="itemCtime" />
+		<result column="IT_UPDATE_TIME" property="itemUtime" />
+	</resultMap>
+
+	<select id="getAllItem" resultMap="itemResultMap">
+		SELECT
+		*
+		FROM
+		T_ITEM
+		<where>
+			<if test="name!=null and name!=''">
+				AND IT_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+		</where>
+	</select>
+
+	<select id="getAllItemCount" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(SELECT
+		*
+		FROM
+		T_ITEM
+		<where>
+			<if test="name!=null and name!=''">
+				AND IT_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+		</where>
+		)
+	</select>
+	
+	<select id="selectItemName" resultType="java.lang.String">
+		SELECT
+			IT_NAME
+		FROM
+			T_ITEM
+		WHERE IT_NAME = #{name}
+	</select>
+
+	<update id="alterItemName">
+		UPDATE
+		T_ITEM
+		SET
+		IT_NAME=#{name} ,IT_UPDATE_TIME = SYSDATE
+		WHERE
+		IT_ID=#{id}
+	</update>
+
+	<insert id="addItem">
+		INSERT INTO T_ITEM
+		VALUES
+		(SEQ_ITEM.NEXTVAL, #{name},#{unit}, '', SYSDATE, SYSDATE)
+	</insert>
+	
+	<delete id="delItem">
+		DELETE 
+		FROM
+			T_ITEM
+		WHERE
+			IT_ID = #{id}
+	</delete>
+	
+	<select id="getIemById" resultMap="itemResultMap">
+	SELECT IT_ID,IT_NAME,IT_UNIT,IT_MEMO,IT_CREATE_TIME,IT_UPDATE_TIME FROM T_ITEM WHERE IT_ID={itemId}
+	</select>
+
+</mapper>

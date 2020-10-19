@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.SettleAccountsUserDtoMapper"> 
+	<!-- 用resultMap映射对应的关系 -->
+	<resultMap id="resultMapAccountsUserDto" type="mecs.camel.model.dto.SettleAccountsUserDto">
+		
+		<result column="US_NAME" property="userName"></result>
+		<!--这里注意，因为有连字典表查性别的中文名字，所有字段名必须是字典表里面 的
+		然后 因为相同的字段名，所有sql语句，那边要取名，这样才能区分开来  -->
+		<result column="SEX" property="userSex"></result>
+		<result column="US_AGE" property="userAge"></result>
+		<!--这里注意，因为有连字典表查性别的中文名字，所有字段名必须是字典表里面 的  -->
+		<result column="BLOODTYPE" property="userBloodType"></result>
+		<result column="BIR" property="userBirthday"></result>
+		<result column="US_PHONE" property="userPhone"></result>
+		<result column="US_ADDRESS" property="userAddress"></result>
+		<result column="US_NATIVEPLACE" property="userNativePlace"></result>
+		<result column="US_MEMO" property="userMemo"></result>
+		
+		<result column="CA_BALANCE" property="card.balance"></result>
+		
+		
+		<!--  list里面的映射关联-->
+		<collection property="mecRecordlist" ofType="mecs.camel.model.MecRecord">	
+			<result column="MR_ID" property="mrId"></result>
+			<result column="MR_CO_NAME" property="comboName"></result>
+			<result column="MR_PRICE" property="mrPrice"></result>
+			<!-- 关联数据库所以要改名 -->
+			<result column="ITEMSSTATE" property="mrState"></result>
+			<result column="AD_NAME" property="saAdmin"></result>
+			<result column="MR_BIL_TIME" property="bilTime"></result>
+		</collection>
+		
+		
+	</resultMap>
+
+	
+	<select id="querySettleAccounts" resultMap="resultMapAccountsUserDto">
+		SELECT 
+		U.US_NAME,D1.DI_NAME AS SEX,U.US_AGE,D2.DI_NAME AS BLOODTYPE,TO_CHAR(U.US_BIRTHDAY,'YYYY-MM-DD') AS BIR,U.US_PHONE,U.US_ADDRESS,U.US_NATIVEPLACE,U.US_MEMO, 
+		C.CA_BALANCE,
+		RE.MR_ID,RE.MR_CO_NAME,RE.MR_PRICE,D3.DI_NAME AS ITEMSSTATE,A.AD_NAME,RE.MR_BIL_TIME
+		FROM 
+		T_USER U LEFT JOIN T_CARD C ON U.US_ID=C.CA_USER_ID  
+		LEFT JOIN T_MEC_RECORD RE ON RE.MR_CA_ID=C.CA_ID
+		LEFT JOIN T_DICT D1 ON U.US_SEX=D1.DI_CODE AND D1.DI_TYPE='SEX'
+		LEFT JOIN T_DICT D2 ON U.US_BLOODTYPE=D2.DI_CODE AND D2.DI_TYPE='BLOODTYPE'
+		LEFT JOIN T_DICT D3 ON RE.MR_STATE=D3.DI_CODE AND D3.DI_TYPE='ITEMSSTATE'
+        LEFT JOIN T_ADMIN A ON A.AD_ID = RE.MR_SA_ID 
+        WHERE CA_NUMBER=#{cardNum}
+		<!-- WHERE RE.MR_CA_ID =(SELECT CA_ID FROM T_CARD WHERE CA_NUMBER=#{cardNum}) -->
+	</select>
+
+</mapper>

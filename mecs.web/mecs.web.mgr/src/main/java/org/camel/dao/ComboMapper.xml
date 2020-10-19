@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.ComboMapper">
+
+	<resultMap type="mecs.camel.model.Combo" id="comboResultMap">
+		<result column="CO_ID" property="comboId" />
+		<result column="CO_NAME" property="comboName" />
+		<result column="CO_PRICE" property="comboPrice" />
+		<result column="CO_STATE" property="comboState" />
+		<result column="CO_MEMO" property="comboMemo" />
+		<result column="CO_CREATE_TIME" property="comboCtime" />
+		<result column="CO_UPDATE_TIME" property="comboUtime" />
+	</resultMap>
+	<resultMap type="mecs.camel.model.dto.ItemsDto" id="itemsDtoResultMap">
+		<result column="ITS_ID" property="itemsId" />
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<collection property="itemList" ofType="mecs.camel.model.Item">
+			<result column="IT_NAME" property="itemName" />
+		</collection>
+	</resultMap>
+	<select id="getAllCombo" resultMap="comboResultMap">
+		SELECT
+		*
+		FROM
+		T_COMBO
+		<where>
+			<if test="name!=null and name!=''">
+				AND CO_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+		</where>
+	</select>
+
+	<select id="getAllComboCount" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(SELECT
+		*
+		FROM
+		T_COMBO
+		<where>
+			<if test="name!=null and name!=''">
+				AND CO_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+		</where>
+		)
+	</select>
+
+	<delete id="delCombo">
+		DELETE
+		FROM
+		T_COMBO
+		WHERE
+		CO_ID = #{ id}
+	</delete>
+
+	<select id="getDetailsByCombo" resultMap="itemsDtoResultMap">
+		SELECT
+		ITS.ITS_ID,ITS.ITS_NAME,ITS.ITS_PRICE,IT.IT_NAME
+		FROM
+		T_ITEMS ITS
+		LEFT JOIN
+		T_ITEMS_ITEM_LINK IIL ON ITS.ITS_ID = IIL.IIL_ITS_ID
+		LEFT JOIN T_ITEM IT ON IT.IT_ID = IIL.IIL_IT_ID
+		LEFT
+		JOIN
+		T_COMBO_ITEMS_LINK CIL ON CIL.CIL_ITS_ID = ITS.ITS_ID
+	</select>
+
+	<update id="alterComboState">
+		UPDATE T_COMBO
+		SET CO_STATE = #{state}
+		WHERE
+		CO_ID = #{id}
+	</update>
+
+	<insert id="addCombo">
+		<selectKey order="BEFORE" resultType="java.lang.String" keyProperty="comboId">
+			SELECT SEQ_COMBO.NEXTVAL AS comboId
+			FROM
+			DUAL
+		</selectKey>
+		INSERT INTO T_COMBO
+		VALUES(#{comboId},#{comboName},#{comboPrice},#{comboState},NULL,SYSDATE,SYSDATE)
+	</insert>
+
+	<insert id="addComboItems">
+		INSERT INTO T_COMBO_ITEMS_LINK(CIL_ID,CIL_CO_ID,CIL_ITS_ID)
+		SELECT SEQ_COMBO_ITEMS.NEXTVAL,#{comboId},M.*
+		FROM(
+		<foreach collection="itemsList" item="itemsId" index="index" separator="UNION ALL">
+			(SELECT #{itemsId} FROM DUAL)
+		</foreach>
+		)M
+	</insert>
+
+	<select id="queryComboNameByName" resultType="java.lang.String">
+		SELECT CO_NAME FROM T_COMBO WHERE CO_NAME=#{comboName}
+	</select>
+
+	<select id="getComboById" resultMap="comboResultMap">
+	SELECT CO_ID,CO_NAME,CO_PRICE,CO_STATE,CO_MEMO,CO_CREATE_TIME,CO_UPDATE_TIME FROM T_COMBO
+	WHERE CO_ID=#{comboId}
+	</select>
+	<select id="getItemsByCombo" resultType="java.lang.String">
+	SELECT CIL_ITS_ID FROM T_COMBO_ITEMS_LINK WHERE CIL_CO_ID=#{comboId}
+	</select>
+	
+	<update id="updateCombo">
+	UPDATE T_COMBO SET CO_NAME=#{comboName} , CO_PRICE=#{price},CO_UPDATE_TIME=SYSDATE
+		WHERE CO_ID=#{comboId}
+	</update>
+
+	
+
+
+	<!-- <delete id="delItems"> -->
+	<!-- DELETE -->
+	<!-- FROM -->
+	<!-- T_ITEMS -->
+	<!-- WHERE -->
+	<!-- ITS_ID = -->
+	<!-- #{id} -->
+	<!-- </delete> -->
+
+	<!-- <insert id="addItems"> -->
+	<!-- INSERT INTO T_ITEMS VALUES ( SEQ_ITEMS.NEXTVAL,#{name},#{price}, -->
+	<!-- ''， SYSDATE, -->
+	<!-- SYSDATE -->
+	<!-- ); -->
+	<!-- </insert> -->
+
+	<!-- <update id="alterItems"> -->
+	<!-- UPDATE T_ITEMS SET ITS_NAME = #{ name }, ITS_PRICE =#{ price } -->
+	<!-- WHERE -->
+	<!-- ITS_ID = #{ id} -->
+	<!-- </update> -->
+
+</mapper>

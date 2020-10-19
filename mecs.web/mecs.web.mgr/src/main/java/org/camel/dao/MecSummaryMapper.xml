@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.MecSummaryMapper">
+	<resultMap type="mecs.camel.model.dto.UserDto" id="userResultMap">
+		<result column="US_NAME" property="userName" />
+		<result column="SEX" property="userSex" />
+		<result column="US_AGE" property="userAge" />
+		<result column="BLOOD" property="userBloodType" />
+		<result column="TIMEE" property="userBirthday" />
+		<result column="US_PHONE" property="userPhone" />
+		<result column="US_ADDRESS" property="userAddress" />
+		<result column="US_NATIVEPLACE" property="userNativePlace" />
+		<result column="CA_BALANCE" property="card.balance" />
+	</resultMap>
+		<resultMap type="mecs.camel.model.dto.MecRecordDto" id="itemsResultMap">
+			<result column="MR_NUMBER" property="mrNum" />
+			<result column="MR_STATE" property="mrState" />
+		<collection property="irList" ofType="mecs.camel.model.ItemsRecord" >
+			<result column="IR_ID" property="irId" />
+			<result column="IR_ITS_NAME" property="itemsName" />
+			<result column="TIME1" property="irTime" />
+			<result column="IR_RES" property="itemsRes" />
+			<result column="DI_NAME" property="irState" />
+			<result column="DEP_NAME" property="depId" />
+			<result column="IR_STATE" property="irMemo" />
+			<result column="AD_NAME" property="itemsAdmin" />
+		</collection>
+	</resultMap>
+	    <select id="getUserMecRecordByMecNum" resultMap="itemsResultMap">
+	       SELECT 
+	         M.MR_NUMBER,M.MR_STATE,I.IR_ID ,I.IR_STATE,I.IR_ITS_NAME,TO_CHAR(I.IR_PE_TIME,'YYYY-MM-DD HH24:MI:SS') TIME1,
+	         I.IR_RES,A.AD_NAME,
+			 D.DI_NAME,DE.DEP_NAME
+	       FROM 
+	         T_ITEMS_RECORD I 
+	       LEFT JOIN 
+	         T_MEC_RECORD M 
+	       ON 
+	         I.IR_MR_ID =  M.MR_ID 
+	       LEFT JOIN 
+	         T_DICT D 
+	       ON 
+		     D.DI_CODE = I.IR_STATE 
+		   LEFT JOIN 
+		     T_DEPARTMENT DE 
+		   ON 
+		     DE.DEP_ID = I.IR_DEP_ID 
+		   LEFT JOIN 
+		     T_ADMIN A 
+		   ON 
+			 A.AD_ID = I.IR_DOC_ID 
+		   WHERE 
+		     D.DI_TYPE ='ITEMSSTATE' 
+		   AND 
+		     MR_NUMBER = #{mecNum}
+		   AND 
+		     I.IR_STATE != 4
+		   ORDER BY 
+		     I.IR_PE_TIME DESC
+	    </select>
+		<select id="getUserInfoByMecNum" resultMap="userResultMap">
+		    SELECT DISTINCT 
+		       U.US_NAME,DA.DI_NAME SEX,U.US_AGE,DB.DI_NAME BLOOD,TO_CHAR(U.US_BIRTHDAY,'YYYY-MM-DD') TIMEE,U.US_PHONE,
+		       U.US_ADDRESS,U.US_NATIVEPLACE ,C.CA_BALANCE
+		   FROM 
+		      T_USER U 
+		   LEFT JOIN 
+		      T_CARD C 
+		   ON 
+		      C.CA_USER_ID = U.US_ID 
+		   LEFT JOIN 
+		      T_DICT DA 
+		   ON 
+		      DA.DI_CODE = U.US_SEX 
+		   LEFT JOIN 
+			  T_DICT DB 
+		   ON 
+		      DB.DI_CODE = U.US_BLOODTYPE 
+		   LEFT JOIN 
+		      T_MEC_RECORD M 
+		   ON
+		      M.MR_CA_ID = C.CA_ID WHERE DA.DI_TYPE = 'SEX'
+		   AND 
+		      DB.DI_TYPE = 'BLOODTYPE' 
+		   AND 
+		      M.MR_NUMBER = #{mecNum}
+		</select>
+		<select id="getResult" resultType="java.lang.String">
+		    SELECT
+		       IR_RES
+		    FROM 
+		       T_ITEMS_RECORD
+		    WHERE 
+		       IR_ID = #{irId}
+		</select>
+		<update id="addResult">
+		  	UPDATE 
+		       T_MEC_RECORD 
+		    SET 
+		       MR_REQ = #{req},MR_GUIDE = #{guide},MR_TIME = SYSDATE,MR_DOC_ID = #{docName},MR_STATE = 3
+		    WHERE 
+		       MR_NUMBER = #{mecNum}
+		</update>
+</mapper>

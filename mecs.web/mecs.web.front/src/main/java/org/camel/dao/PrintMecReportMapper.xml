@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.PrintMecReportMapper">
+	<resultMap type="mecs.camel.model.User" id="userResultMap">
+		<result column="US_NAME" property="userName" />
+		<result column="SEX" property="userSex" />
+		<result column="US_AGE" property="userAge" />
+		<result column="US_PHONE" property="userPhone" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.MecRecord" id="mrResultMap">
+		<result column="MR_REQ" property="mrReq" />
+		<result column="MR_GUIDE" property="mrGuide" />
+		<result column="BILTIME" property="bilTime" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.ItemsRecord" id="irResultMap">
+		<result column="IR_ITS_NAME" property="itemsName" />
+		<result column="DEP_NAME" property="depId" />
+		<result column="IR_RES" property="itemsRes" />
+	</resultMap>
+
+	<select id="getUserByMrNum" resultMap="userResultMap">
+		SELECT U.US_NAME,D.DI_NAME AS SEX,U.US_AGE,U.US_PHONE
+		FROM T_USER U INNER
+		JOIN T_DICT D ON D.DI_CODE = U.US_SEX
+		INNER JOIN T_CARD C ON C.CA_USER_ID = U.US_ID
+		INNER JOIN T_MEC_RECORD M ON
+		M.MR_CA_ID = C.CA_ID
+		WHERE D.DI_TYPE = 'SEX' AND M.MR_NUMBER = #{mrNum}
+	</select>
+
+	<select id="getMecRecordByMrNum" resultMap="mrResultMap">
+		SELECT MR_REQ,MR_GUIDE,TO_CHAR(MR_BIL_TIME,'YYYY-MM-DD') AS BILTIME
+		FROM T_MEC_RECORD WHERE MR_NUMBER = #{mrNum}
+	</select>
+
+	<select id="itemsList" resultMap="irResultMap">
+		SELECT IR.IR_ITS_NAME,DEP.DEP_NAME,IR.IR_RES
+		FROM T_ITEMS_RECORD IR INNER JOIN T_MEC_RECORD MR ON MR.MR_ID = IR.IR_MR_ID
+		INNER JOIN T_DEPARTMENT DEP ON DEP.DEP_ID = IR.IR_DEP_ID
+		WHERE MR.MR_NUMBER = #{mrNum}
+	</select>
+	
+	<!-- 改体检记录状态 -->
+	<update id="changeMecRecordState">
+		UPDATE T_MEC_RECORD SET MR_STATE = 4 WHERE MR_NUMBER = #{mrNum}
+	</update>
+	
+	<!-- 添加日志 -->
+	<!-- 插入日志记录 -->
+	<insert id="addFrontLog" parameterType="mecs.camel.model.Log">
+		INSERT INTO
+		T_FRONTLOG (FL_ID,FL_US_ID,FL_TYPE,FL_REMARK,FL_CREATE_TIME)
+		VALUES
+		(SEQ_MGRLOG.NEXTVAL,#{logUserId},#{logType},#{logRemark},SYSDATE)
+	</insert>
+	
+	<select id="getUserIdByCardNum" resultType="java.lang.String">
+		SELECT CA_USER_ID FROM T_CARD WHERE CA_NUMBER = #{cardN}
+	</select>
+</mapper>

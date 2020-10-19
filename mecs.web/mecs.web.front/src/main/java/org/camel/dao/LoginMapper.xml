@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.LoginMapper">
+    <resultMap type="mecs.camel.model.User" id="userResultMap">
+		<result column="US_ID" property="userId" />
+		<result column="US_NAME" property="userName" />
+		<result column="NAME1" property="userSex" />
+		<result column="US_AGE" property="userAge" />
+		<result column="NAME2" property="userBloodType" />
+		<result column="US_BIRTHDAY" property="userBirthday" />
+		<result column="US_PHONE" property="userPhone" />
+		<result column="US_ADDRESS" property="userAddress" />
+		<result column="US_NATIVEPLACE" property="userNativePlace" />
+		<result column="TIEM1" property="userCtime" />
+		<result column="TIME2" property="userUtime" />
+	</resultMap>
+			
+		<select id="loginByCardNum" resultMap="userResultMap">
+		   SELECT 
+		   		U.US_ID,U.US_NAME,D.DI_NAME NAME1,U.US_AGE,DE.DI_NAME NAME2,
+		   		U.US_BIRTHDAY,U.US_PHONE,U.US_ADDRESS,U.US_NATIVEPLACE,
+                TO_CHAR(U.US_CREATE_TIME,'YYYY-MM-DD HH24:MI:SS') TIEM1,
+                TO_CHAR(U.US_UPDATE_TIME ,'YYYY-MM-DD HH24:MI:SS') TIME2
+           FROM 
+                T_USER U 
+           LEFT JOIN 
+                T_DICT D 
+           ON 
+                D.DI_CODE = U.US_SEX 
+           LEFT JOIN 
+                T_DICT DE 
+           ON 
+                DE.DI_CODE = U.US_BLOODTYPE 
+           LEFT JOIN 
+                T_CARD C ON C.CA_USER_ID = U.US_ID 
+           WHERE 
+                D.DI_TYPE='SEX' 
+           AND 
+                DE.DI_TYPE='BLOODTYPE'
+           AND 
+                C.CA_NUMBER=#{cardNum}
+		</select> 
+</mapper>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 15px; top: 5px; right: 15px;">
+
+			<div class="layui-form-item">
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -40px">
+					<label class="layui-form-label ">套餐名</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="comboName" lay-verify="required"
+							placeholder="请输入套餐名" autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 5px 20px;">
+					<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+						id="search" lay-submit lay-filter="LAY-user-back-search"
+						style="width: 200px;">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>搜索
+					</button>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 5px 6px;">
+					<button type="button" id="clean"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 200px">
+						<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>清空
+					</button>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 5px 6px;">
+					<button type="button" id="add"
+						class="layui-btn layui-btn-normal layui-btn-sm"
+						style="width: 200px">
+						<i class="layui-icon layui-icon-add-1 layuiadmin-button-btn"></i>新增
+					</button>
+				</div>
+
+			</div>
+
+			<!--表格内容-->
+			<div style="margin-top: 15px;">
+				<div class="layui-form">
+					<table class="layui-table" id="comboTable" style="width: 100%;">
+
+					</table>
+					<div class="layui-input-inline" id="pageBtn"
+						style="margin-left: 640px">
+
+						<button class="layui-btn layui-btn-sm" id="pageBtn1">
+							<i class="layui-icon"></i>
+						</button>
+						<label class="layui-form-label" id="pageNum">1/1</label>
+						<button class="layui-btn layui-btn-sm" id="pageBtn2">
+							<i class="layui-icon"></i>
+						</button>
+
+						<div id="test1"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/comboManager.js"></script>
+
+</html>

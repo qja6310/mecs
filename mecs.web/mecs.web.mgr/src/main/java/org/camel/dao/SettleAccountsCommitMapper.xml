@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.SettleAccountsCommitMapper">
+	
+	<select id="querySettleState" resultType="java.lang.Integer">
+		SELECT MR_STATE FROM T_MEC_RECORD WHERE MR_ID=#{mrId}
+	</select>
+	
+	<select id="quaryBalance" resultType="java.lang.Integer">
+		SELECT CA_BALANCE FROM T_CARD WHERE CA_ID=(SELECT MR_CA_ID FROM  T_MEC_RECORD WHERE MR_ID=#{mrId})		
+	</select>
+	
+	<select id="quaryMrPrice" resultType="java.lang.Integer">
+		SELECT MR_PRICE FROM  T_MEC_RECORD WHERE MR_ID=#{mrId}
+	</select>
+	
+	<update id="updateBalance">
+		UPDATE T_CARD SET CA_BALANCE=#{newBalance} WHERE CA_ID=(SELECT MR_CA_ID FROM  T_MEC_RECORD WHERE MR_ID=#{mrId})
+	</update>
+	
+	<update id="updateMrState">
+		UPDATE T_MEC_RECORD SET MR_STATE=2,MR_SA_ID=#{adminId},MR_SA_TIME = SYSDATE WHERE MR_ID=#{mrId}
+	</update>
+	
+	<update id="updateItemsRecord">
+		UPDATE T_ITEMS_RECORD SET IR_STATE=2 WHERE IR_MR_ID=#{mrId}
+	</update>
+	
+	<select id="queryCardNum" resultType="java.lang.String">
+		SELECT CA_NUMBER FROM T_CARD WHERE CA_ID=(SELECT MR_CA_ID FROM  T_MEC_RECORD WHERE MR_ID=#{mrId})
+	</select>
+	
+	<insert id="insertAccount" parameterType="mecs.camel.model.Account">	
+		INSERT INTO T_ACCOUNT VALUES
+		(SEQ_ACC.NEXTVAL,#{cardNum},#{accType},#{accDescribe},#{accMoney},NUll,SYSDATE)
+	</insert>
+	
+	<select id="getMrNumberByMrId" resultType="java.lang.String">
+		SELECT MR_NUMBER FROM T_MEC_RECORD WHERE MR_ID=#{mrId}
+	</select>
+	
+	<select id="getAdminNumeByAdminId" resultType="java.lang.String">
+		SELECT AD_NAME FROM T_ADMIN WHERE AD_ID = #{adminId}
+	</select>
+</mapper>

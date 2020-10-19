@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.AdminLoginMapper">
+
+    <resultMap type="mecs.camel.model.Admin" id="adminResultMap">
+    	<!-- admin所有字段名都对应上了 -->
+		<result column="AD_ID" property="adminId"/>
+		<result column="AD_ACCOUNT" property="adminAcc"/>
+		<result column="AD_PSWD" property="adminPawd"/>
+		<result column="AD_NAME" property="adminName"/>	
+		<result column="AD_DEP_ID" property="depId"/>
+		<result column="AD_STATE" property="adminState"/>
+		<result column="AD_MEMO" property="adminMemo"/>
+		<result column="AD_CREATE_TIME" property="adminCtime"/>
+		<result column="AD_UPDATE_TIME" property="adminUtime"/>
+    </resultMap>
+    
+    
+    <select id="loginQueryAdmin" parameterType="mecs.camel.model.Admin" resultMap="adminResultMap">
+		SELECT 
+		AD_ID,AD_NAME,AD_ACCOUNT,AD_PSWD,AD_DEP_ID,AD_STATE,AD_MEMO,AD_CREATE_TIME,AD_UPDATE_TIME 
+		FROM T_ADMIN 
+		WHERE AD_ACCOUNT=#{adminAcc} AND AD_PSWD=#{adminPawd}
+	</select>
+	
+	<select id="queryAdminState" resultType="java.lang.String">
+		SELECT AD_STATE FROM T_ADMIN WHERE AD_ID =#{adminId}
+	</select>
+	
+	
+	<insert id="doLog" parameterType="mecs.camel.model.Log">
+		INSERT INTO T_MGRLOG(ML_ID,ML_AD_ID,ML_TYPE,ML_REMARK,ML_MEMO,ML_CREATE_TIME) 
+		VALUES(SEQ_MGRLOG.NEXTVAL,#{logUserId},#{logType},#{logRemark},NULL,SYSDATE)
+	</insert>
+	
+	<select id="queryOldPsd" resultMap="adminResultMap"> 
+		SELECT * FROM T_ADMIN WHERE AD_ID=#{adminId} AND AD_PSWD=#{oldPsd}
+	</select>
+	
+	<update id="changPsd" >
+		UPDATE T_ADMIN SET AD_PSWD=#{newPsd} WHERE AD_ID=#{adminId}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui2/css/layui.css">
+<script src="../3rd/layui2/layui.js"></script>
+
+</head>
+
+<body class="layui-layout-body">
+	<!-- <form class="layui-form"> -->
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 15px; top: 10px">
+			<!-- 内容主体区域 -->
+			<div class="layui-form-item">
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -50px;">
+					<label class="layui-form-label">菜单名</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="menu" placeholder="请输入菜单名"
+							lay-verify="required" autocomplete="off" maxlength="10"
+							class="layui-input" style="width: 200px; height: 30px;">
+					</div>
+				</div>
+			
+				<div class="layui-inline" style="margin: 0px 0px 0px -50px;">
+					<label class="layui-form-label">图标</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="icon" disabled="true"
+							　
+								lay-verify="required" autocomplete="off" maxlength="150"
+							class="layui-input" style="width: 200px; height: 30px;">
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item" style="margin: 0px 0px 0px 0px;">
+				<div class="layui-collapse" lay-accordion style="width: 550px;">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">请选择图标</h2>
+						<div class="layui-colla-content layui-show" style="height: 280px;overflow:auto ">
+							<ul class="site-doc-icon">
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-rate-half"></i>
+											<div class="doc-icon-name">半星</div>
+											<button type="button" value="layui-icon-rate-half">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-rate"></i>
+											<div class="doc-icon-name">星星-空心</div>
+											<button type="button" value="layui-icon-rate">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-rate-solid"></i>
+											<div class="doc-icon-name">星星-实心</div>
+											<button type="button" value="layui-icon-rate-solid">选择</button></li>
+									</div>
+
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-cellphone"></i>
+											<div class="doc-icon-name">手机</div>
+											<button type="button" value="layui-icon-cellphone">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-vercode"></i>
+											<div class="doc-icon-name">验证码</div>
+											<button type="button" value="layui-icon-vercode">选择</button></li>
+									</div>
+								</div>
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-login-wechat"></i>
+											<div class="doc-icon-name">微信</div>
+											<button type="button" value="layui-icon-login-wechat">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+
+										<li><i class="layui-icon layui-icon-login-qq"></i>
+											<div class="doc-icon-name">QQ</div>
+											<button type="button" value="layui-icon-login-qq">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-login-weibo"></i>
+											<div class="doc-icon-name">微博</div>
+											<button type="button" value="layui-icon-login-weibo">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-password"></i>
+											<div class="doc-icon-name">密码</div>
+											<button type="button" value="layui-icon-password">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-username"></i>
+											<div class="doc-icon-name">用户名</div>
+											<button type="button" value="layui-icon-username">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-refresh-3"></i>
+											<div class="doc-icon-name">刷新</div>
+											<button type="button" value="layui-icon-refresh-3">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-auz"></i>
+											<div class="doc-icon-name">授权</div>
+											<button type="button" value="layui-icon-auz">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-spread-left"></i>
+											<div class="doc-icon-name">左向右伸缩菜单</div>
+											<button type="button" value="layui-icon-spread-left">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-shrink-right"></i>
+											<div class="doc-icon-name">右向左伸缩菜单</div>
+											<button type="button" value="layui-icon-shrink-right">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-snowflake"></i>
+											<div class="doc-icon-name">雪花名</div>
+											<button type="button" value="layui-icon-snowflake">选择</button>
+										</li>
+									</div>
+								</div>
+									<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-tips"></i>
+											<div class="doc-icon-name">提示说明</div>
+											<button type="button" value="layui-icon-tips">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-note"></i>
+											<div class="doc-icon-name">便签</div>
+											<button type="button" value="layui-icon-note">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-home"></i>
+											<div class="doc-icon-name">主页</div>
+											<button type="button" value="layui-icon-home">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-senior"></i>
+											<div class="doc-icon-name">高级</div>
+											<button type="button" value="layui-icon-senior">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-refresh"></i>
+											<div class="doc-icon-name">刷新</div>
+											<button type="button" value="layui-icon-refresh">选择</button>
+										</li>
+									</div>
+								</div>
+							<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-flag"></i>
+											<div class="doc-icon-name">旗帜</div>
+											<button type="button" value="layui-icon-flag">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-theme"></i>
+											<div class="doc-icon-name">主题</div>
+											<button type="button" value="layui-icon-theme">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-notice"></i>
+											<div class="doc-icon-name">消息-通知</div>
+											<button type="button" value="layui-icon-notice">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-website"></i>
+											<div class="doc-icon-name">网站</div>
+											<button type="button" value="layui-icon-website">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-console"></i>
+											<div class="doc-icon-name">控制台</div>
+											<button type="button" value="layui-icon-console">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-face-surprised"></i>
+											<div class="doc-icon-name">惊讶</div>
+											<button type="button" value="layui-icon-face-surprised">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-set"></i>
+											<div class="doc-icon-name">设置-空心</div>
+											<button type="button" value="layui-icon-set">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-template-1"></i>
+											<div class="doc-icon-name">模板</div>
+											<button type="button" value="layui-icon-template-1">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-app"></i>
+											<div class="doc-icon-name">应用</div>
+											<button type="button" value="layui-icon-app">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-template"></i>
+											<div class="doc-icon-name">模板</div>
+											<button type="button" value="layui-icon-template">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-praise"></i>
+											<div class="doc-icon-name">赞</div>
+											<button type="button" value="layui-icon-praise">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-tread"></i>
+											<div class="doc-icon-name">踩</div>
+											<button type="button" value="layui-icon-tread">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-male"></i>
+											<div class="doc-icon-name">男</div>
+											<button type="button" value="layui-icon-male">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-female"></i>
+											<div class="doc-icon-name">女</div>
+											<button type="button" value="layui-icon-female">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-camera"></i>
+											<div class="doc-icon-name">相机-空心</div>
+											<button type="button" value="layui-icon-camera">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-flag"></i>
+											<div class="doc-icon-name">旗帜</div>
+											<button type="button" value="xe66c;">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-more"></i>
+											<div class="doc-icon-name">菜单-水平</div>
+											<button type="button" value="layui-icon-more">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-more-vertical"></i>
+											<div class="doc-icon-name">菜单-垂直</div>
+											<button type="button" value="layui-icon-more-vertical">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-rmb"></i>
+											<div class="doc-icon-name">金额-人民币</div>
+											<button type="button" value="layui-icon-rmb">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-dollar"></i>
+											<div class="doc-icon-name">金额-美元</div>
+											<button type="button" value="layui-icon-dollar">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-diamond"></i>
+											<div class="doc-icon-name">钻石-等级</div>
+											<button type="button" value="layui-icon-diamond">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fire"></i>
+											<div class="doc-icon-name">火</div>
+											<button type="button" value="layui-icon-fire">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-return"></i>
+											<div class="doc-icon-name">返回</div>
+											<button type="button" value="layui-icon-return">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-location"></i>
+											<div class="doc-icon-name">位置-地图</div>
+											<button type="button" value="layui-icon-location">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-read"></i>
+											<div class="doc-icon-name">办公-阅读</div>
+											<button type="button" value="layui-icon-read">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-survey"></i>
+											<div class="doc-icon-name">调查</div>
+											<button type="button" value="layui-icon-survey">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-face-smile"></i>
+											<div class="doc-icon-name">微笑</div>
+											<button type="button" value="layui-icon-face-smile">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-face-cry"></i>
+											<div class="doc-icon-name">哭泣</div>
+											<button type="button" value="layui-icon-face-cry">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-cart-simple"></i>
+											<div class="doc-icon-name">购物车</div>
+											<button type="button" value="layui-icon-cart-simple">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-cart"></i>
+											<div class="doc-icon-name">购物车</div>
+											<button type="button" value="layui-icon-cart">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-next"></i>
+											<div class="doc-icon-name">下一页</div>
+											<button type="button" value="layui-icon-next">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-prev"></i>
+											<div class="doc-icon-name">上一页</div>
+											<button type="button" value="layui-icon-prev">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-upload-drag"></i>
+											<div class="doc-icon-name">上传-空心-拖拽</div>
+											<button type="button" value="layui-icon-upload-drag">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-upload"></i>
+											<div class="doc-icon-name">上传-实心</div>
+											<button type="button" value="layui-icon-upload">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-download-circle"></i>
+											<div class="doc-icon-name">下载-圆圈</div>
+											<button type="button" value="layui-icon-download-circle">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-component"></i>
+											<div class="doc-icon-name">组件</div>
+											<button type="button" value="layui-icon-component">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-file-b"></i>
+											<div class="doc-icon-name">文件-粗</div>
+											<button type="button" value="layui-icon-file-b">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-user"></i>
+											<div class="doc-icon-name">用户</div>
+											<button type="button" value="layui-icon-user">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-find-fill"></i>
+											<div class="doc-icon-name">发现-实心</div>
+											<button type="button" value="layui-icon-find-fill">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-loading"></i>
+											<div class="doc-icon-name">loading</div>
+											<button type="button" value="layui-icon-loading">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-add-1"></i>
+											<div class="doc-icon-name">添加</div>
+											<button type="button" value="layui-icon-add-1">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-play"></i>
+											<div class="doc-icon-name">播放</div>
+											<button type="button" value="layui-icon-play">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-pause"></i>
+											<div class="doc-icon-name">暂停</div>
+											<button type="button" value="layui-icon-pause">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-headset"></i>
+											<div class="doc-icon-name">音频-耳机</div>
+											<button type="button" value="layui-icon-headset">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-video"></i>
+											<div class="doc-icon-name">视频</div>
+											<button type="button" value="layui-icon-video">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-voice"></i>
+											<div class="doc-icon-name">语音-声音</div>
+											<button type="button" value="layui-icon-voice">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-speaker"></i>
+											<div class="doc-icon-name">消息-通知-喇叭</div>
+											<button type="button" value="layui-icon-speaker">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-del"></i>
+											<div class="doc-icon-name">删除线</div>
+											<button type="button" value="layui-icon-fonts-del">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-code"></i>
+											<div class="doc-icon-name">代码</div>
+											<button type="button" value="layui-icon-fonts-code">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-html"></i>
+											<div class="doc-icon-name">HTML</div>
+											<button type="button" value="layui-icon-fonts-html">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-strong"></i>
+											<div class="doc-icon-name">字体加粗</div>
+											<button type="button" value="layui-icon-fonts-strong">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-unlink"></i>
+											<div class="doc-icon-name">删除链接</div>
+											<button type="button" value="layui-icon-unlink">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-picture"></i>
+											<div class="doc-icon-name">图片</div>
+											<button type="button" value="layui-icon-picture">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-link"></i>
+											<div class="doc-icon-name">链接</div>
+											<button type="button" value="layui-icon-link">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-face-smile-b"></i>
+											<div class="doc-icon-name">笑-粗</div>
+											<button type="button" value="layui-icon-face-smile-b">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-align-left"></i>
+											<div class="doc-icon-name">左对齐</div>
+											<button type="button" value="layui-icon-align-left">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-align-right"></i>
+											<div class="doc-icon-name">右对齐</div>
+											<button type="button" value="layui-icon-align-right">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-align-center"></i>
+											<div class="doc-icon-name">居中对齐</div>
+											<button type="button" value="layui-icon-align-center">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-u"></i>
+											<div class="doc-icon-name">字体-下划线</div>
+											<button type="button" value="layui-icon-fonts-u">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-i"></i>
+											<div class="doc-icon-name">字体-斜体</div>
+											<button type="button" value="layui-icon-fonts-i">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->
+									<!-- 模版x -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-tabs"></i>
+											<div class="doc-icon-name">选项卡</div>
+											<button type="button" value="layui-icon-tabs">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-radio"></i>
+											<div class="doc-icon-name">单选框-选中</div>
+											<button type="button" value="layui-icon-radio">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-circle"></i>
+											<div class="doc-icon-name">单选框-候选</div>
+											<button type="button" value="layui-icon-circle">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-edit"></i>
+											<div class="doc-icon-name">编辑</div>
+											<button type="button" value="layui-icon-edit">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-share"></i>
+											<div class="doc-icon-name">分享</div>
+											<button type="button" value="layui-icon-share">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-delete"></i>
+											<div class="doc-icon-name">删除</div>
+											<button type="button" value="layui-icon-delete">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-form"></i>
+											<div class="doc-icon-name">表单</div>
+											<button type="button" value="layui-icon-form">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-cellphone-fine"></i>
+											<div class="doc-icon-name">手机-细体</div>
+											<button type="button" value="layui-icon-cellphone-fine">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-dialogue"></i>
+											<div class="doc-icon-name">聊天 对话 沟通</div>
+											<button type="button" value="layui-icon-dialogue">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-fonts-clear"></i>
+											<div class="doc-icon-name">文字格式化</div>
+											<button type="button" value="layui-icon-fonts-clear">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-layer"></i>
+											<div class="doc-icon-name">窗口</div>
+											<button type="button" value="layui-icon-layer">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-date"></i>
+											<div class="doc-icon-name">日期</div>
+											<button type="button" value="layui-icon-date">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-water"></i>
+											<div class="doc-icon-name">水 下雨</div>
+											<button type="button" value="layui-icon-water">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-code-circle"></i>
+											<div class="doc-icon-name">圆圈</div>
+											<button type="button" value="layui-icon-code-circle">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-carouse"></i>
+											<div class="doc-icon-name">轮播组图</div>
+											<button type="button" value="layui-icon-carouse">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-align-left"></i>
+											<div class="doc-icon-name">翻页</div>
+											<button type="button" value="layui-icon-align-left">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-prev-circle"></i>
+											<div class="doc-icon-name">右对齐</div>
+											<button type="button" value="layui-icon-prev-circle">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-layouts"></i>
+											<div class="doc-icon-name">布局</div>
+											<button type="button" value="layui-icon-layouts">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-util"></i>
+											<div class="doc-icon-name">工具</div>
+											<button type="button" value="layui-icon-util">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-templeate-1"></i>
+											<div class="doc-icon-name">选择模板</div>
+											<button type="button" value="layui-icon-templeate-1">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-upload-circle"></i>
+											<div class="doc-icon-name">上传-圆圈</div>
+											<button type="button" value="layui-icon-upload-circle">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-tree"></i>
+											<div class="doc-icon-name">树</div>
+											<button type="button" value="layui-icon-tree">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-table"></i>
+											<div class="doc-icon-name">表格</div>
+											<button type="button" value="layui-icon-table">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-chart"></i>
+											<div class="doc-icon-name">图表</div>
+											<button type="button" value="layui-icon-chart">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-chart-screen"></i>
+											<div class="doc-icon-name">图标 报表 屏幕</div>
+											<button type="button" value="layui-icon-chart-screen">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-engine"></i>
+											<div class="doc-icon-name">引擎</div>
+											<button type="button" value="layui-icon-engine">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-triangle-d"></i>
+											<div class="doc-icon-name">下三角</div>
+											<button type="button" value="layui-icon-triangle-d">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-triangle-r"></i>
+											<div class="doc-icon-name">右三角</div>
+											<button type="button" value="layui-icon-triangle-r">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-file"></i>
+											<div class="doc-icon-name">文件</div>
+											<button type="button" value="layui-icon-file">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-set-sm"></i>
+											<div class="doc-icon-name">设置-小型</div>
+											<button type="button" value="layui-icon-set-sm">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-add-circle"></i>
+											<div class="doc-icon-name">添加-圆圈</div>
+											<button type="button" value="layui-icon-add-circle">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-about"></i>
+											<div class="doc-icon-name">关于</div>
+											<button type="button" value="layui-icon-about">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-up"></i>
+											<div class="doc-icon-name">箭头 向上</div>
+											<button type="button" value="layui-icon-up">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-down"></i>
+											<div class="doc-icon-name">箭头 向下</div>
+											<button type="button" value="layui-icon-down">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-left"></i>
+											<div class="doc-icon-name">箭头 向左</div>
+											<button type="button" value="layui-icon-left">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-right"></i>
+											<div class="doc-icon-name">箭头 向右</div>
+											<button type="button" value="layui-icon-right">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-circle-dot"></i>
+											<div class="doc-icon-name">圆点</div>
+											<button type="button" value="layui-icon-circle-dot">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-search"></i>
+											<div class="doc-icon-name">搜索</div>
+											<button type="button" value="layui-icon-search">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-set-fill"></i>
+											<div class="doc-icon-name">设置-实心</div>
+											<button type="button" value="layui-icon-set-fill">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-group"></i>
+											<div class="doc-icon-name">群组</div>
+											<button type="button" value="layui-icon-group">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-friends"></i>
+											<div class="doc-icon-name">好友</div>
+											<button type="button" value="layui-icon-friends">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-reply-fill"></i>
+											<div class="doc-icon-name">回复 评论 实心</div>
+											<button type="button" value="layui-icon-reply-fill">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-menu-fill"></i>
+											<div class="doc-icon-name">菜单 隐身 实心</div>
+											<button type="button" value="layui-icon-menu-fill">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-log"></i>
+											<div class="doc-icon-name">记录</div>
+											<button type="button" value="layui-icon-log">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-picture-fine"></i>
+											<div class="doc-icon-name">图片-细体</div>
+											<button type="button" value="layui-icon-picture-fine">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+									<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-face-smile-fine"></i>
+											<div class="doc-icon-name">笑</div>
+											<button type="button" value="layui-icon-face-smile-fine">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-list"></i>
+											<div class="doc-icon-name">列表</div>
+											<button type="button" value="layui-icon-list">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-release"></i>
+											<div class="doc-icon-name">纸飞机</div>
+											<button type="button" value="layui-icon-release">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-ok"></i>
+											<div class="doc-icon-name">对</div>
+											<button type="button" value="layui-icon-ok">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-help"></i>
+											<div class="doc-icon-name">帮助</div>
+											<button type="button" value="layui-icon-help">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->		
+								<!-- 模版 -->
+								<div class="layui-form-item">
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 0px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-chat"></i>
+											<div class="doc-icon-name">客服</div>
+											<button type="button" value="layui-icon-chat">选择</button></li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-top"></i>
+											<div class="doc-icon-name">top 置顶</div>
+											<button type="button" value="layui-icon-top">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-star"></i>
+											<div class="doc-icon-name">收藏-空心</div>
+											<button type="button" value="layui-icon-star">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-star-fill"></i>
+											<div class="doc-icon-name">收藏-实心</div>
+											<button type="button" value="layui-icon-star-fill">选择</button>
+										</li>
+									</div>
+									<div class="layui-inline"
+										style="margin: 0px 0px 0px 40px; text-align: center; width: 13%">
+										<li><i class="layui-icon layui-icon-ok-circle"></i>
+											<div class="doc-icon-name">正确</div>
+											<button type="button" value="layui-icon-ok-circle">选择</button>
+										</li>
+									</div>
+								</div>
+								<!-- 结束	 -->	
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="layui-form-item">
+						<div class="layui-inline" style="margin: 0px 0px -30px 90px;">
+					<button type="button" id="sure"
+						class="layui-btn layui-btn-normal layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon layuiadmin-button-btn"></i>确定
+					</button>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px -30px 60px;">
+					<button type="button" id="close"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon layuiadmin-button-btn"></i>取消
+					</button>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 	</form> -->
+	<script src="../3rd/js/jquery.min.js"></script>
+	<script src="../js/menuAdd.js"></script>
+	<script type="text/javascript"></script>
+</body>
+
+
+</html>

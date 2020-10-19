@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.AccountMapper">
+	<resultMap type="mecs.camel.model.Account" id="accountResultMap">
+		<result column="ACC_ID" property="accId" />
+		<result column="ACC_CA_NUMBER" property="cardNum" />
+		<result column="DI_NAME" property="accType" />
+		<result column="ACC_REMARK" property="accDescribe" />
+		<result column="ACC_MONEY" property="accMoney" />
+		<result column="ACC_TYPE" property="accMemo" />
+		<result column="TIMEE" property="accCtime" />
+	</resultMap>
+		<select id="getAccountCountByCard" resultType="java.lang.Integer">
+		     SELECT COUNT(*)  FROM  T_ACCOUNT WHERE  ACC_CA_NUMBER = #{cardNum}
+				<if test="beginTime !=null and beginTime != ''">
+					AND ACC_CREATE_TIME &gt;= TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="overTime !=null and overTime != ''">
+					AND ACC_CREATE_TIME &lt;= TO_DATE(CONCAT(#{overTime},' 23:59:59'),'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="type !=null and type != ''">
+					AND ACC_TYPE  = #{type}
+				</if>
+		</select>
+		<select id="getAccountByCard" resultMap="accountResultMap">
+			SELECT 
+			 A.ACC_ID,TO_CHAR(A.ACC_CREATE_TIME ,'yyyy-mm-dd hh24:mi:ss') TIMEE,
+			 A.ACC_CA_NUMBER , D.DI_NAME ,A.ACC_REMARK,A.ACC_MONEY,A.ACC_MEMO ,A.ACC_TYPE
+			FROM 
+			 T_ACCOUNT A INNER JOIN T_DICT D ON A.ACC_TYPE = D.DI_CODE	
+			WHERE 
+			 A.ACC_CA_NUMBER = #{cardNum}
+			AND 
+			 D.DI_TYPE = 'ACCOUNTTYPE'
+				<if test="beginTime !=null and beginTime != ''">
+					AND A.ACC_CREATE_TIME &gt;= TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="overTime !=null and overTime != ''">
+					AND A.ACC_CREATE_TIME &lt;= TO_DATE(CONCAT(#{overTime},' 23:59:59'),'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="type !=null and type != ''">
+					AND A.ACC_TYPE  = #{type}
+				</if>
+			ORDER BY
+			 A.ACC_CREATE_TIME DESC
+		</select>
+		<select id="getBalanceByCard" resultType="java.lang.String">
+		     SELECT  CA_BALANCE FROM  T_CARD WHERE CA_NUMBER = #{cardNum}
+		</select>
+		<!-- <select id="getUserIdByCard" resultType="java.lang.Integer">
+		     SELECT  CA_USER_ID FROM T_CARD WHERE  CA_NUMBER = #{cardNum}
+		</select>
+		<insert id="addLogForAccount">
+			 INSERT INTO  T_FRONTLOG (FL_ID,FL_US_ID,FL_TYPE,FL_REMARK,FL_MEMO,FL_CREATE_TIME) 
+			 VALUES (SEQ_FRONTLOG.NEXTVAL,#{operId},#{operType},#{logRemark},NULL,SYSDATE)
+		</insert>
+		
+		<select id="getUserNameByUserId" resultType="java.lang.String">
+		     SELECT  US_NAME FROM  T_USER WHERE  US_ID=#{userId}
+		</select> -->
+</mapper>

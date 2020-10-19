@@ -1,0 +1,35 @@
+.LookParticulars{
+	background-color: bisque;
+    left: 50%;
+    /*margin: -高/2 0 0 -宽/2;*/
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    width: 700px;
+    height: 400px;
+    z-index: 99; 
+    border-radius : 30px;
+    display: none;
+}
+a{ 
+    text-decoration:none; //去掉默认下滑线
+    color:#333; //设置默认颜色
+    
+}
+a:hover{
+    text-decoration:none;//鼠标放上面不显示下划线
+    color:#333; //设置鼠标放上去颜色
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+

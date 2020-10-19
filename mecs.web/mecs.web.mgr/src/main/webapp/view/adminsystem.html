@@ -1,0 +1,281 @@
+<!doctype html>
+<html class="x-admin-sm">
+
+<head>
+<meta charset="UTF-8">
+<title>健康体检散检后台</title>
+<link rel="stylesheet" href="../3rd/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+<script src="../3rd/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../3rd/admin/js/xadmin.js"></script>
+
+<!--<script>
+			// 是否开启刷新记忆tab功能
+			// var is_remember = false;
+		</script>-->
+</head>
+
+<body class="index">
+	<!-- 顶部开始 -->
+	<div class="container">
+		<div class="logo">
+			<a href="./index.html">健康体检散检后台</a>
+		</div>
+		<div class="left_open">
+			<a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+		</div>
+		<ul class="layui-nav right" lay-filter="" style="width: 30%;">
+			<ul class="layui-nav layui-layout-right">
+				<span style="font-style: normal;">用户：</span>
+				<li class="layui-nav-item"><a href="javascript:;"
+					id="adminName"> <img src="img/fengye.gif" class="layui-nav-img">
+				</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a onclick="jumpChangePassword()">修改密码</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a href="../doLogout">注销</a></li>
+			</ul>
+		</ul>
+	</div>
+	<!-- 顶部结束 -->
+	<!-- 中部开始 -->
+	<!-- 左侧菜单开始 -->
+	<div class="left-nav" style='overflow-y: auto;'>
+		<div id="side-nav">
+			<ul id="nav">
+				<!-- <li>
+					<a href="javascript:;"> <i class="iconfont left-nav-li"
+						lay-tips="体检工作">&#xe73f;</i> <cite>体检工作</cite> <i
+						class="iconfont nav_right">&#xe697;</i></a>
+					<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('开单','billingOrder.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>开单</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('打印到导检单和条码','printLeadOrder.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>打印导检单和条码</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('体检报告打印','mecReport.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检报告打印</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('体检退费','backMoney.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检退费</cite>
+								</a>
+							</li>
+						</ul>
+					</li>
+				
+					<li>
+					<a href="javascript:;">
+							<i class="iconfont left-nav-li" lay-tips="统计查询">&#xe73f;</i>
+							<cite>统计查询</cite>
+							<i class="iconfont nav_right">&#xe697;</i></a>
+						<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('体检综合查询','mecRecordCheck.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检综合查询</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('体检人员查询','userQuery.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检人员查询</cite>
+								</a>
+							</li>
+							
+							
+						</ul>
+					</li>
+				<li>
+					<a href="javascript:;">
+							<i class="iconfont left-nav-li layui-icon layui-icon-rate" lay-tips="收费工作"></i>
+							<cite>收费工作</cite>
+							<i class="iconfont nav_right">&#xe697;</i></a>
+						<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('开卡','adminbuildcard.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>开卡</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('结算','settleAccounts.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>结算</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('个人对账','acccount.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>个人对账</cite>
+								</a>
+							</li>
+							
+							
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:;">
+							<i class="iconfont left-nav-li" lay-tips="医生工作">&#xe6b8;</i>
+							<cite>医生工作</cite>
+							<i class="iconfont nav_right">&#xe697;</i></a>
+						<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('项目接收','itemsReceive.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>项目接收</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('体检总结','mecSummary.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检总结</cite>
+								</a>
+							</li>
+						</ul>
+					</li>
+				<li>
+						<a href="javascript:;">
+							<i class="iconfont left-nav-li" lay-tips="卡片管理">&#xe73f;</i>
+							<cite>卡片管理</cite>
+							<i class="iconfont nav_right">&#xe697;</i></a>
+						<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('体检卡管理','cardManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>体检卡管理</cite>
+								</a>
+							</li>
+						</ul>
+					</li>
+				<li>
+						<a href="javascript:;">
+							<i class="iconfont left-nav-li" lay-tips="系统管理">&#xe6b2;</i>
+							<cite>系统管理</cite>
+							<i class="iconfont nav_right">&#xe697;</i></a>
+						<ul class="sub-menu">
+							<li>
+								<a onclick="xadmin.add_tab('人员设置','personnelMg.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>人员设置</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('角色配置','roleManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>角色配置</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('菜单配置','menuManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>菜单配置</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('科室设置','DepartmentManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>科室设置</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('细项配置','itemManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>细项配置</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('项目配置','itemsManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>项目配置</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('套餐配置','comboConfig.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>套餐配置</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('前端日志查看','FrontLog.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>前端日志查看</cite>
+								</a>
+							</li>
+							<li>
+								<a onclick="xadmin.add_tab('后台日志查看','MgrLog.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>后台日志查看</cite>
+								</a>
+							</li>
+								<li>
+								<a onclick="xadmin.add_tab('参数管理','ParameterManager.html')">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>参数管理</cite>
+								</a>
+							</li>
+							
+						</ul>
+					</li> -->
+			</ul>
+		</div>
+	</div>
+	<!-- <div class="x-slide_left"></div> -->
+	<!-- 左侧菜单结束 -->
+	<!-- 右侧主体开始 -->
+	<div class="page-content">
+		<div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+			<ul class="layui-tab-title">
+				<li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+			</ul>
+			<div class="layui-unselect layui-form-select layui-form-selected"
+				id="tab_right">
+				<dl>
+					<dd data-type="this">关闭当前</dd>
+					<dd data-type="other">关闭其它</dd>
+					<dd data-type="all">关闭全部</dd>
+				</dl>
+			</div>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item layui-show">
+					<iframe src='./welcome.html' frameborder="0" scrolling="yes"
+						class="x-iframe"></iframe>
+				</div>
+			</div>
+			<div id="tab_show"></div>
+		</div>
+	</div>
+	<div class="page-content-bg"></div>
+	<style id="theme_style"></style>
+	<!-- 右侧主体结束 -->
+	<!-- 中部结束 -->
+</body>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/adminsystem.js"></script>
+<script type="text/javascript"></script>
+		<div class="page-content-bg"></div>
+		<style id="theme_style"></style>
+		<!-- 右侧主体结束 -->
+		<!-- 中部结束 -->
+	</body>
+		<div class="page-content-bg"></div>
+		<script type="text/javascript">
+		</script>
+		<style id="theme_style"></style>
+		<!-- 右侧主体结束 -->
+		<!-- 中部结束 -->
+	</body>
+</html>

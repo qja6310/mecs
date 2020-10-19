@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.BackMoneyMapper">
+	<resultMap type="mecs.camel.model.dto.ItemsRecordDto" id="backMoneyResultMap">
+		<result column="IR_ID" property="irId" />
+		<result column="DI_NAME" property="dict.dictName" />
+		<result column="IR_STATE" property="irState" />
+		<result column="IR_ITS_NAME" property="itemsName" />
+		<result column="TIME1" property="mecr.bilTime" />
+		<result column="IR_ITS_PRICE" property="itemsPrice" />
+	</resultMap>
+		<select id="getItemsCountByCard" resultType="java.lang.Integer">
+		   SELECT 
+		      COUNT(*)
+		   FROM 
+		       T_ITEMS_RECORD I 
+		   LEFT JOIN 
+		       T_MEC_RECORD M 
+		   ON 
+		       M.MR_ID = I.IR_MR_ID 
+		   LEFT JOIN 
+		       T_DICT D 
+		   ON 
+		       I.IR_STATE = D.DI_CODE 
+		   LEFT JOIN
+		       T_CARD C 
+		   ON 
+		       C.CA_ID = M.MR_CA_ID 
+		   WHERE 
+		       D.DI_TYPE='ITEMSSTATE' 
+		   AND C.CA_NUMBER= #{cardNum}
+				<if test="itemsState !=null and itemsState != ''">
+					AND I.IR_STATE  = #{itemsState}
+				</if>
+		</select>
+		<select id="getItemsByCard" resultMap="backMoneyResultMap">
+	       SELECT 
+		      I.IR_ID ,D.DI_NAME,I.IR_STATE,I.IR_ITS_NAME,I.IR_ITS_PRICE,TO_CHAR(M.MR_BIL_TIME,'YYYY-MM-DD HH24:MI:SS') TIME1
+		   FROM 
+		       T_ITEMS_RECORD I 
+		   LEFT JOIN 
+		       T_MEC_RECORD M 
+		   ON 
+		       M.MR_ID = I.IR_MR_ID 
+		   LEFT JOIN 
+		       T_DICT D 
+		   ON 
+		       I.IR_STATE = D.DI_CODE 
+		   LEFT JOIN
+		       T_CARD C 
+		   ON 
+		       C.CA_ID = M.MR_CA_ID 
+		   WHERE 
+		       D.DI_TYPE='ITEMSSTATE' 
+		   AND C.CA_NUMBER= #{cardNum}
+				<if test="itemsState !=null and itemsState != ''">
+					AND I.IR_STATE  = #{itemsState}
+				</if>
+		   ORDER BY
+			  M.MR_BIL_TIME  
+		   DESC
+		</select>
+		<select id="getBalanceByCard" resultType="java.lang.String">
+		     SELECT 
+		      CA_BALANCE
+		     FROM 
+		      T_CARD
+			 WHERE 
+			  CA_NUMBER = #{cardNum}
+		</select>
+		<select id="getUserNameByCard" resultType="java.lang.String">
+		     SELECT 
+		       US.US_NAME 
+		     FROM 
+		       T_USER US 
+		     INNER JOIN 
+		       T_CARD CA 
+		     ON
+		       CA.CA_USER_ID  = US.US_ID 
+		     WHERE 
+		       CA.CA_NUMBER = #{cardNum}
+		</select>
+		<update id="modifyItemsStateById">
+			UPDATE 
+			   T_ITEMS_RECORD
+			SET 
+			   IR_STATE = 4 WHERE IR_ID = #{cardItemsId}
+		</update>
+		<update id="modifyBalanceByCard">
+		    UPDATE 
+		       T_CARD 
+		    SET
+		       CA_BALANCE = (SELECT CA_BALANCE+#{money} FROM T_CARD WHERE CA_NUMBER = #{cardNum})
+		    WHERE 
+		       CA_NUMBER = #{cardNum}
+		</update>
+		<insert id="addAccount">
+		    INSERT INTO 
+		       T_ACCOUNT 
+		    VALUES
+		       (SEQ_ACC.NEXTVAL,#{cardNum},0,'体检退费',#{money},NULL,SYSDATE)
+		</insert>
+		<update id="modifyReturnTime">
+		    UPDATE 
+		       T_ITEMS_RECORD 
+		    SET
+		       IR_RM_TIME = SYSDATE
+		    WHERE 
+		       IR_ID = #{cardItemsId}
+		</update>
+		<update id="modifyMecRecordMoney">
+		    UPDATE 
+		       T_MEC_RECORD
+		    SET
+		       MR_PRICE = (SELECT MR_PRICE-#{money} FROM T_MEC_RECORD WHERE MR_ID = 
+		       (SELECT IR_MR_ID FROM T_ITEMS_RECORD WHERE IR_ID = #{cardItemsId}))
+		    WHERE 
+		       MR_ID = (SELECT IR_MR_ID FROM T_ITEMS_RECORD WHERE IR_ID = #{cardItemsId})
+		</update>
+		
+</mapper>

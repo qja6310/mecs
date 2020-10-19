@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+	<form class="layui-form">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-body" style="left: 15px; top: 10px">
+				<!-- 内容主体区域 -->
+				<div class="layui-form-item">
+
+					<div class="layui-inline" style="margin: 0px 0px 0px -60px;">
+						<label class="layui-form-label">账号</label>
+						<div class="layui-input-block">
+							<input type="text" name="" id="adminAcc" placeholder="请输入账号"
+								lay-verify="required" autocomplete="off" maxlength="50"class="layui-input"
+								style="height: 30x;">
+						</div>
+					</div>
+
+					<div class="layui-inline" style="margin: 0px 10px 0px 0px;">
+						<label class="layui-form-label">姓名</label>
+						<div class="layui-input-block">
+							<input type="text" name="" id="adminName" placeholder="请输入姓名"
+								lay-verify="required" autocomplete="off" maxlength="25"class="layui-input"
+								style="height: 30x;">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline" style="margin: 0px 0px 0px -60px;">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="" id="adminPswd" placeholder="请输入密码:"
+								lay-verify="required" autocomplete="off" maxlength="16"class="layui-input"
+								style="height: 30x;">
+						</div>
+					</div>
+					<div class="layui-inline" style="margin: 0px 0px 0px 0px;">
+						<label class="layui-form-label">再次密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="" id="rePswd" placeholder="请再次输入密码:"
+								lay-verify="required" autocomplete="off" maxlength="16"class="layui-input"
+								style="height: 30x;">
+						</div>
+					</div>
+
+
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline" style="margin: 0px 0px 0px -60px;">
+						<label class="layui-form-label">科室</label>
+						<div class="layui-input-block" style="width: 182px; height: 30x;">
+							<select name="city" lay-verify="" id="addSelect">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-collapse" lay-accordion
+						style="width: 520px; ">
+						<div class="layui-colla-item" >
+							<h2 class="layui-colla-title">请选择角色</h2>
+							<div class="layui-colla-content layui-show"style="height: 160px;overflow:auto">
+								<div class="layui-inline" id="role" style="text-align:left;">
+									<!-- <input type="checkbox" name="" title="超级管理员"> -->
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="layui-form-item">
+							<div class="layui-inline" style="margin: 0px 0px -30px 90px;">
+					<button type="button" id="sure"
+						class="layui-btn layui-btn-normal layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon layuiadmin-button-btn"></i>确定
+					</button>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px -30px 60px;">
+					<button type="button" id="close"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon layuiadmin-button-btn"></i>取消
+					</button>
+				</div>
+
+				</div>
+
+			</div>
+		</div>
+	</form>
+</body>
+
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/personnelAdd.js"></script>
+<script type="text/javascript"></script>
+</html>

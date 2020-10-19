@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 15px; top: 5px; right: 15px;">
+
+			<div class="layui-form-item">
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -40px">
+					<label class="layui-form-label ">用户名</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="userName" lay-verify="required"
+							placeholder="请输入用户名" autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -20px;">
+					<label class="layui-form-label">体检时间</label>
+					<div class="layui-input-block">
+						<input type="text" name="date" id="sTime" placeholder="开始时间"
+							autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;" readonly="readonly">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -20px;">
+					<label class="layui-form-label" id="regTime">体检时间</label>
+					<div class="layui-input-block">
+						<input type="text" name="date" id="eTime" placeholder="结束时间"
+							autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;" readonly="readonly">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-inline" style="margin: 0px 0px -20px -150px">
+					<div class="layui-input-block">
+						<label class="layui-form-label">体检码</label>
+						<div class="layui-input-block">
+							<input type="text" name="" id="mecCode" placeholder="请输入条码号"
+								lay-verify="required" autocomplete="off" class="layui-input"
+								style="width: 250px; height: 30px;" oninput = "value=value.replace(/[^\d]/g,'')">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px -20px -20px;">
+					<label class="layui-form-label">联系电话</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="tel" placeholder="请输入电话"
+							lay-verify="required" autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px -15px 20px;">
+					<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+						id="search" lay-submit lay-filter="LAY-user-back-search"
+						style="width: 100px">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>搜索
+					</button>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px -15px 6px;">
+					<button type="button" id="clean"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>清空
+					</button>
+				</div>
+
+				<!--<div class="layui-inline" style="margin: 0px 0px -15px 6px;">
+					<button type="button" id="export"
+						class="layui-btn layui-btn-normal layui-btn-sm"
+						style="width: 100px">
+						<i class="layui-icon layui-icon-export layuiadmin-button-btn"></i>导出Excel
+					</button>
+				</div>-->
+			</div>
+
+			<!--表格内容-->
+			<div style="margin-top: 40px;">
+				<div class="layui-form">
+					<table class="layui-table" style="width: 100%;">
+						<thead>
+							<tr class="layui-bg-cyan">
+								<th style="width: 15%";>用户名</th>
+								<th style="width: 15%";>手机</th>
+								<th style="width: 15%";>体检码</th>
+								<th style="width: 15%";>体检项目</th>
+								<th style="width: 15%";>总检医生</th>
+								<th style="width: 15%";>体检时间</th>
+								<th style="width: 10%";>操作</th>
+							</tr>
+						</thead>
+						<tbody id="mecRecord">
+							
+						</tbody>
+					</table>
+					<div class="layui-input-inline" id="pageBtn"
+						style="margin-left: 640px">
+
+						<button class="layui-btn layui-btn-sm" id="pageBtn1">
+							<i class="layui-icon"></i>
+						</button>
+						<label class="layui-form-label" id="pageNum">1/1</label>
+						<button class="layui-btn layui-btn-sm" id="pageBtn2">
+							<i class="layui-icon"></i>
+						</button>
+
+						<div id="test1"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/mecRecordCheck.js"></script>
+
+</html>

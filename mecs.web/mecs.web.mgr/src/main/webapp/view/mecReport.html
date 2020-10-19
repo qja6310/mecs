@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+<script src="../3rd/js/jquery.min.js"></script>
+
+<link rel="stylesheet" href="../3rd/qr/font-awesome.min.css" />
+<!-- <script src="../3rd/qr/jquery191.js"></script> -->
+<script src="../3rd/qr/bootstrap_v3.0.js"></script>
+<script src="../3rd/qr/common_d5afedb.js"></script>
+<script src="../3rd/qr/bo/index.js"></script>
+<script src="../3rd/qr/bo/jceb.msgtip.js"></script>
+<script src="../3rd/qr/bo/cli-qrcode_95a0632.js"></script>
+<link rel="stylesheet" href="../3rd/qr/bo/page-deqr_dc1e9e9.css" />
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 15px; top: 5px; right: 15px;">
+
+			<div class="layui-form-item">
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -40px">
+					<label class="layui-form-label ">体检卡号</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="cardNum" lay-verify="required"
+							placeholder="请输入体检卡号" autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -20px;">
+					<label class="layui-form-label">体检号码</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="mecCode" placeholder="请输入体检号码"
+							autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;"
+							oninput="value=value.replace(/[^\d]/g,'')" maxlength="11">
+					</div>
+				</div>
+				<div class="layui-inline" style="margin: 0px 0px 10px 20px;">
+					<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+						id="search" lay-submit lay-filter="LAY-user-back-search"
+						style="width: 100px" onclick="readCard()">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>搜索
+					</button>
+				</div>
+				<div class="layui-inline" style="margin: 0px 0px 10px 6px;">
+					<div id="deqrcamera"">
+						<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+							title='扫描二维码自动获取体检号码'>
+							<i
+								class="layui-icon layui-icon-camera-fill layuiadmin-button-btn"></i>
+							扫描二维码
+						</button>
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 10px 6px;">
+					<button type="button" id="clean"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 100px" onclick="clearInfo()">
+						<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>清空
+					</button>
+				</div>
+			</div>
+			<!--表格内容-->
+			<div>
+				<div class="layui-form">
+					<div class="table-head">
+						<table class="layui-table" style="width: 100%;">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<thead>
+								<tr class="layui-bg-cyan">
+									<th style="width: 10%";>序号</th>
+									<th style="width: 15%";>体检码</th>
+									<th style="width: 30%";>体检套餐</th>
+									<th style="width: 10%";>消费金额</th>
+									<th style="width: 20%";>开单日期</th>
+									<th style="width: 15%";>打印体检报告</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-body" style="height: 420px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<tbody id="mecRecord">
+								<tr>
+									<td colspan="6" style="text-align: center; font-weight: bold;">请先输入卡号或者体检码</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div
+		style='margin-left: 30%; margin-top: 0%; display: none; position: absolute; z-index: 9999'
+		class="modal fade" id="htmlScanModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content"
+				style="width: 430px; height: 370px; position: absolute; z-index: 999;">
+				<div class="modal-header">
+					<button type="button" class="close" onclick='closeee()'
+						data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">二维码扫描</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scanner">
+						<video id="scanVideo" width="400" height="400"
+							style="margin-top: -80px"></video>
+					</div>
+					<div id="scan-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- <script src="../3rd/js/jquery.min.js"></script> -->
+<script src="../js/mecReport.js"></script>
+
+</html>

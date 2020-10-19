@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="org.camel.dao.DepartmentMapper">
+	<resultMap type="mecs.camel.model.dto.DepartmentDto" id="department">
+		<result column="DEP_ID"  property="depId" />
+		<result column="DEP_NAME"  property="depName" />
+		<result column="DI_NAME"  property="dict.dictName"/>
+		<result column="DEP_MEMO"  property="depMemo"/>
+		<result column="CTIME"  property="depCtime"/>
+		<result column="UTIME"  property="depUtime"/>
+		
+	</resultMap>
+	<select id="getDepartment" resultMap="department"> 
+		
+		SELECT DE.DEP_ID,DE.DEP_NAME,DI.DI_NAME,DE.DEP_MEMO,
+		TO_CHAR(DE.DEP_CREATE_TIME,'YYYY-MM-DD HH24:MI:SS') AS CTIME,
+		TO_CHAR(DE.DEP_UPDATE_TIME,'YYYY-MM-DD HH24:MI:SS') AS UTIME
+		FROM T_DEPARTMENT DE LEFT JOIN T_DICT DI ON DE.DEP_STATE = DI.DI_CODE
+		WHERE DE.DEP_STATE=1 AND DI.DI_TYPE='DEPTYPE'
+		
+			<if test="beginTime!=null and beginTime!=''">
+			AND DE.DEP_CREATE_TIME &gt;=TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endTime!=null and endTime!=''">
+			AND DE.DEP_CREATE_TIME &lt;=TO_DATE(CONCAT(#{endTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="name!=null and name!=''">
+			AND DE.DEP_NAME like CONCAT(CONCAT('%',#{name}),'%') 
+			</if>
+	</select>
+	
+	<select id="getAllCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS MYCOUNT FROM T_DEPARTMENT DE LEFT JOIN T_DICT DI ON DE.DEP_STATE = DI.DI_CODE
+		WHERE DE.DEP_STATE=1 AND DI.DI_TYPE='DEPTYPE'
+			<if test="beginTime!=null and beginTime!=''">
+			AND DE.DEP_CREATE_TIME &gt;=TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endTime!=null and endTime!=''">
+			AND DE.DEP_CREATE_TIME &lt;=TO_DATE(CONCAT(#{endTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="name!=null and name!=''">
+			AND DE.DEP_NAME like CONCAT(CONCAT('%',#{name}),'%') 
+			</if>
+	</select>
+	<select id="getDepName" resultType="java.lang.String">
+		SELECT DEP_NAME FROM T_DEPARTMENT  WHERE DEP_ID=#{depId} 
+	</select>
+	<update id="delDep">
+		UPDATE T_DEPARTMENT SET DEP_STATE=2 ,DEP_NAME= #{depName} WHERE DEP_ID=#{depId}
+	</update>
+	<select id="checkdepName" resultType="java.lang.String">
+		SELECT DEP_NAME FROM T_DEPARTMENT  WHERE DEP_NAME=#{depName} 
+	</select>
+	<insert id="addDep">
+		INSERT INTO T_DEPARTMENT VALUES(SEQ_DEP.NEXTVAL,#{depName},1,#{depDescribe},SYSDATE,SYSDATE)
+	</insert>
+	<select id="getDepDescribe" resultType="java.lang.String">
+		SELECT DEP_MEMO FROM T_DEPARTMENT  WHERE DEP_ID=#{depId} 
+	</select>
+
+	<select id="checkEditDepName" resultType="java.lang.String">
+		SELECT DEP_NAME FROM T_DEPARTMENT  WHERE DEP_NAME=#{depName} AND DEP_ID!=#{depId}
+	</select>
+	<update id="updateDep">
+		UPDATE T_DEPARTMENT SET DEP_NAME=#{depName} ,DEP_MEMO= #{depDescribe} ,DEP_UPDATE_TIME=SYSDATE WHERE DEP_ID=#{depId}
+	</update>  
+	
+	
+</mapper>

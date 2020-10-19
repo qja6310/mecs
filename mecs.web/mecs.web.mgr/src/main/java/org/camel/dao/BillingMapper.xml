@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.BillingMapper">
+	<resultMap type="mecs.camel.model.User" id="userResultMap">
+		<result column="US_ID" property="userId" />
+		<result column="US_NAME" property="userName" />
+		<result column="SEX" property="userSex" />
+		<result column="US_AGE" property="userAge" />
+		<result column="DI_NAME" property="userBloodType" />
+		<result column="BIRTHDAY" property="userBirthday" />
+		<result column="US_PHONE" property="userPhone" />
+		<result column="US_ADDRESS" property="userAddress" />
+		<result column="US_NATIVEPLACE" property="userNativePlace" />
+		<result column="US_MEMO" property="userMemo" />
+		<!-- <result column="CTIME" property="userCtime" /> <result column="UTIME" property="userUtime" /> -->
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Combo" id="comboResultMap">
+		<result column="CO_ID" property="comboId" />
+		<result column="CO_NAME" property="comboName" />
+		<result column="CO_PRICE" property="comboPrice" />
+		<result column="DI_NAME" property="comboState" />
+		<result column="CO_MEMO" property="comboMemo" />
+		<result column="CTIME" property="comboCtime" />
+		<result column="UTIME" property="comboUtime" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.dto.ItemsDto" id="itemsDtoResultMap">
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<collection property="itemList" ofType="mecs.camel.model.Item">
+			<result column="IT_NAME" property="itemName" />
+		</collection>
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Items" id="itemsResultMap">
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<result column="ITS_DEP_ID" property="depId" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Items" id="itsResultMap">
+		<result column="IR_ITS_NAME" property="itemsName" />
+		<result column="IR_ITS_PRICE" property="itemsPrice" />
+		<result column="DEP_NAME" property="depId" />
+	</resultMap>
+
+	<!-- <resultMap type="mecs.camel.model.ItemsRecord" id="irResultMap"> <result column="CO_ID" property="irId" /> <result 
+		column="CO_NAME" property="mrId" /> <result column="CO_PRICE" property="itemsName" /> <result column="DI_NAME" property="itemsRes" 
+		/> <result column="CO_MEMO" property="itemsReq" /> <result column="CTIME" property="itemsAdmin" /> <result column="UTIME" 
+		property="irState" /> <result column="CO_PRICE" property="itemsPrice" /> <result column="DI_NAME" property="irTime" /> <result 
+		column="CO_MEMO" property="irMemo" /> <result column="CTIME" property="uTime" /> <result column="UTIME" property="rmTime" 
+		/> </resultMap> -->
+
+	<resultMap type="mecs.camel.model.MecRecord" id="mrResultMap">
+		<result column="CA_NUMBER" property="cardId" />
+		<result column="MR_CO_NAME" property="comboName" />
+		<result column="MR_PRICE" property="mrPrice" />
+		<result column="AD_NAME" property="docAdmin" />
+		<result column="MR_REQ" property="mrReq" />
+		<result column="DI_NAME" property="mrState" />
+		<result column="BITTIME" property="bilTime" />
+		<result column="MR_GUIDE" property="mrGuide" />
+	</resultMap>
+
+	<!-- **********************************************邱********************************************** 根据卡号获取用户信息 -->
+	<select id="getUserInfoByCardNum" resultMap="userResultMap">
+		SELECT
+		U.US_ID,U.US_NAME,D.DI_NAME AS SEX,U.US_AGE,DI.DI_NAME,
+		TO_CHAR(U.US_BIRTHDAY,'YYYY-MM-DD') BIRTHDAY,U.US_PHONE,
+		U.US_ADDRESS,U.US_NATIVEPLACE,U.US_MEMO
+		FROM
+		T_USER U INNER JOIN
+		T_DICT D ON D.DI_CODE = U.US_SEX
+        INNER JOIN T_DICT DI ON DI.DI_CODE = U.US_BLOODTYPE
+        
+		INNER JOIN T_CARD C ON C.CA_USER_ID = U.US_ID
+		WHERE
+		D.DI_TYPE = 'SEX' AND DI.DI_TYPE = 'BLOODTYPE' AND C.CA_NUMBER = #{cardNum}
+	</select>
+
+	<!-- *******************************************************邱*********************************************** 根据卡号获取卡余额 -->
+	<select id="getCardBalance" resultType="java.lang.String">
+		SELECT
+		CA_BALANCE
+		FROM
+		T_CARD
+		WHERE
+		CA_STATE = '1' AND CA_NUMBER = #{cardNum}
+	</select>
+
+	<!-- 获取套餐信息 -->
+	<select id="getAllComboInfo" resultMap="comboResultMap">
+		SELECT
+		C.CO_ID,C.CO_NAME,C.CO_PRICE,D.DI_NAME,C.CO_MEMO,
+		TO_CHAR(C.CO_CREATE_TIME,'YYYY-MM-DD') CTIME,
+		TO_CHAR(C.CO_UPDATE_TIME,'YYYY-MM-DD') UTIME
+		FROM
+		T_COMBO C INNER JOIN T_DICT D ON C.CO_STATE = D.DI_CODE
+		WHERE
+		D.DI_TYPE
+		= 'COMBOSTATE'
+		<if test="comboName != null and comboName != ''">
+			AND C.CO_NAME LIKE CONCAT(CONCAT('%',#{comboName}),'%')
+		</if>
+		<if test="comboState != null and comboState != ''">
+			AND C.CO_STATE = #{comboState}
+		</if>
+		ORDER BY
+		C.CO_ID
+	</select>
+
+	<!-- 获取某个套餐详情 -->
+	<select id="getDetailsByComboId" resultMap="itemsDtoResultMap">
+		SELECT
+		ITS.ITS_NAME,ITS.ITS_PRICE,IT.IT_NAME
+		FROM
+		T_ITEMS ITS INNER JOIN
+		T_ITEMS_ITEM_LINK IIL ON ITS.ITS_ID = IIL.IIL_ITS_ID
+		INNER JOIN T_ITEM IT ON IT.IT_ID = IIL.IIL_IT_ID
+		INNER JOIN
+		T_COMBO_ITEMS_LINK CIL ON CIL.CIL_ITS_ID = ITS.ITS_ID
+		WHERE
+		CIL.CIL_CO_ID = #{comboId}
+	</select>
+
+	<!-- 获取体检记录ID -->
+	<select id="getMecRecordId" resultType="java.lang.String">
+		SELECT
+		SEQ_MEC_RECORD.NEXTVAL
+		FROM
+		DUAL
+	</select>
+
+	<!-- 根据卡号获取卡ID -->
+	<select id="getCardIdByCardNum" resultType="java.lang.String">
+		SELECT
+		CA_ID
+		FROM
+		T_CARD
+		WHERE
+		CA_NUMBER = #{cardNum}
+	</select>
+
+	<!-- 根据套餐ID获取套餐名 -->
+	<select id="getConboName" resultType="java.lang.String">
+		SELECT
+		CO_NAME
+		FROM
+		T_COMBO
+		WHERE
+		CO_ID
+		IN
+		<foreach collection="comboIdList" item="comboId" open="(" close=")" separator=",">
+			#{comboId}
+		</foreach>
+	</select>
+
+	<!-- 添加体检记录 -->
+	<insert id="addMecRecord" parameterType="mecs.camel.model.MecRecord">
+		INSERT INTO
+		T_MEC_RECORD
+		(MR_ID,MR_NUMBER,MR_CA_ID,MR_CO_NAME,MR_PRICE,MR_BIL_ID,MR_STATE,MR_BIL_TIME)
+		VALUES
+		(#{mrId},#{mrNum},#{cardId},#{comboName},#{mrPrice},#{bilAdmin},#{mrState},SYSDATE)
+	</insert>
+
+	<!-- 根据套餐ID获取项目名和价格还有科室Id -->
+	<select id="getItemsNameByComboId" resultMap="itemsResultMap">
+		SELECT
+		ITS.ITS_NAME,ITS.ITS_PRICE,ITS.ITS_DEP_ID
+		FROM
+		T_ITEMS ITS INNER JOIN T_COMBO_ITEMS_LINK CIL ON CIL.CIL_ITS_ID =
+		ITS.ITS_ID
+		WHERE
+		CIL.CIL_CO_ID
+		IN
+		<foreach collection="comboIdList" item="comboId" open="(" close=")" separator=",">
+			#{comboId}
+		</foreach>
+	</select>
+
+	<!-- 批量插入项目记录 -->
+	<insert id="addItemsRecord" parameterType="mecs.camel.model.Items">
+		INSERT INTO
+		T_ITEMS_RECORD
+		(IR_ID,IR_MR_ID,IR_ITS_NAME,IR_DEP_ID,IR_STATE,IR_ITS_PRICE)
+		VALUES
+		(SEQ_ITEMS_RECORD.NEXTVAL,#{itemsDemo},#{itemsName},#{depId},'1',#{itemsPrice})
+	</insert>
+
+	<!-- 插入日志记录 -->
+	<insert id="addMgrLog" parameterType="mecs.camel.model.Log">
+		INSERT INTO
+		T_MGRLOG (ML_ID,ML_AD_ID,ML_TYPE,ML_REMARK,ML_CREATE_TIME)
+		VALUES
+		(SEQ_MGRLOG.NEXTVAL,#{logUserId},#{logType},#{logRemark},SYSDATE)
+	</insert>
+
+	<!-- 根据卡号获取体检人体检记录 -->
+	<select id="getMecRecordList" resultMap="mrResultMap">
+		SELECT CA.CA_NUMBER,MR.MR_CO_NAME,MR.MR_PRICE,AD.AD_NAME,MR.MR_REQ,
+		DI.DI_NAME,TO_CHAR(MR.MR_BIL_TIME,'YYYY-MM-DD') AS
+		BITTIME
+		FROM T_MEC_RECORD MR LEFT JOIN T_CARD CA ON CA.CA_ID = MR.MR_CA_ID
+		LEFT JOIN T_DICT DI ON DI.DI_CODE =
+		MR.MR_STATE
+		LEFT JOIN T_ADMIN AD ON AD.AD_ID = MR.MR_DOC_ID
+		LEFT JOIN T_USER US ON US.US_ID = CA.CA_USER_ID
+		WHERE
+		DI.DI_TYPE = 'MECSTATE' AND CA.CA_ID IN
+		<foreach collection="cardIdList" item="cardId" open="(" close=")" separator=",">
+			#{cardId}
+		</foreach>
+	</select>
+
+	<!-- 根据卡号获取体检人体检记录 -->
+	<select id="getCardIdByUserId" resultType="java.lang.String">
+		SELECT CA.CA_ID FROM T_CARD CA WHERE CA.CA_USER_ID =
+		(SELECT CA_USER_ID
+		FROM T_CARD CA WHERE CA.CA_NUMBER = #{cardNum})
+	</select>
+
+	<!-- 根据体检报告获取用户信息 -->
+	<select id="getUserByMrId" resultMap="userResultMap">
+		SELECT U.US_NAME,D.DI_NAME AS SEX,U.US_AGE,DI.DI_NAME
+		FROM T_USER U
+		INNER JOIN T_DICT D ON D.DI_CODE = U.US_SEX
+		INNER JOIN T_DICT DI ON DI.DI_CODE = U.US_BLOODTYPE
+		INNER JOIN T_CARD C ON C.CA_USER_ID = U.US_ID
+		INNER JOIN T_MEC_RECORD M ON
+		M.MR_CA_ID = C.CA_ID
+		WHERE D.DI_TYPE = 'SEX' AND DI.DI_TYPE = 'BLOODTYPE'
+		AND M.MR_NUMBER = #{mrNum}
+	</select>
+
+	<!-- 根据体检ID获取开单时间 -->
+	<select id="getBilTimeByMrId" resultType="java.lang.String">
+		SELECT TO_CHAR(MR_BIL_TIME,'YYYY-MM-DD HH24:MI:SS') AS BTIME
+		FROM T_MEC_RECORD WHERE MR_NUMBER = #{mrNum}
+	</select>
+
+	<!-- 根据体检记录获取项目的一些信息 -->
+	<select id="getItemsInfoByMrId" resultMap="itsResultMap">
+		SELECT IR.IR_ITS_NAME,IR.IR_ITS_PRICE,DEP.DEP_NAME
+		FROM T_ITEMS_RECORD IR INNER JOIN T_DEPARTMENT DEP ON DEP.DEP_ID = IR.IR_DEP_ID
+        INNER JOIN T_MEC_RECORD MR ON MR.MR_ID = IR.IR_MR_ID
+		WHERE MR.MR_NUMBER = #{mrNum}
+	</select>
+	
+	<!-- 检查体检码是否重复 -->
+	<select id="checkMecNumber" resultType="java.lang.String">
+		SELECT MR_ID FROM T_MEC_RECORD WHERE MR_NUMBER = #{mrNum}
+	</select>
+</mapper>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+	<form class="layui-form">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-body" style="left: 15px; top: 10px">
+				<!-- 内容主体区域 -->
+				<div class="layui-form-item">
+
+					<div class="layui-inline" style="margin: 0px 0px 0px -40px;">
+						<label class="layui-form-label">项目名</label>
+						<div class="layui-input-block">
+							<input type="text" disabled="true" id="itemsName" placeholder="请输入项目名"
+								lay-verify="required" autocomplete="off" maxlength="50"
+								class="layui-input" style="height: 30x;">
+						</div>
+					</div>
+
+					<div class="layui-inline" style="margin: 0px 10px 0px -20px;">
+						<label class="layui-form-label">价格</label>
+						<div class="layui-input-block">
+							<input type="text" disabled="true" id="price" placeholder="请输入价格"
+								lay-verify="required" autocomplete="off"oninput="value=value.replace(/[^\d]/g,'');" maxlength="8"
+								class="layui-input" style="height: 30x;">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline" style="margin: 0px 0px 0px -40px;">
+						<label class="layui-form-label">科室</label>
+						<div class="layui-input-block">
+							<input type="text" disabled="true" id="dep" placeholder="请输入科室"
+								lay-verify="required" autocomplete="off"
+								class="layui-input" style="height: 30x;">
+						</div>
+					</div>
+					
+				</div>
+				<div class="layui-form-item " style="width: 520px; height: 270px;">
+					<!-- <div class="layui-collapse" lay-accordion style="width: 520px;">
+						<div class="layui-colla-item">
+							<h2 class="layui-colla-title">请选择细项</h2>
+							<div class="layui-colla-content layui-show" style="height: 200px;overflow:auto">
+								<div class="layui-inline" id="item">
+								</div>
+							</div>
+						</div>
+
+					</div> -->
+						<div class="table-head">
+						<table class="layui-table" lay-size="sm" style="margin-bottom: 0px;">
+							<colgroup>
+								<col width="180">
+								<col />
+							</colgroup>
+							<thead>
+								<tr class="layui-bg-cyan">
+								
+									<th style="width: 10%;">序号</th>
+									<th style="width: 65%;">细项</th>
+									<th style="width: 25%;">单位</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-body" style="height: 200px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<tbody id="detailsTbody">
+
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline" style="margin: 0px 0px 0px 200px;">
+						<button type="button" id="close"
+							class="layui-btn layui-btn-danger layui-btn-sm"
+							style="width: 100px">
+							<i class="layui-icon layui-icon layuiadmin-button-btn"></i>确定
+						</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</form>
+</body>
+
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/itemsLook.js"></script>
+<script type="text/javascript"></script>
+</html>

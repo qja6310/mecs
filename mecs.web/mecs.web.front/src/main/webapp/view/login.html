@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8" >
+<script src="../3rd/admin/lib/layui/layui.js" charset="utf-8"></script>
+<link rel="stylesheet" href="../3rd/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+<link rel="stylesheet" href="../3rd/res/layui/css/layui.css">
+  
+</head>
+<body class="layui-layout-body" >
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card" style="height: 100px;">
+					<div class="layui-card-body ">
+							<div class="layui-form-item">
+							<div class="layui-input-block" >
+								
+							<div class="layui-inline layui-show-xs-block"style="margin-left: -150px">
+								<div class="layui-form-item layui-inline">
+								    <label class="layui-form-label"style="height: 30px;padding: 5px ">卡号</label>
+								    <div class="layui-input-inline">
+								      <input id='cardNum'style="height: 30px ;width: 190px;" type="text" name="cardNum" lay-verify="required" placeholder="请输入卡号" autocomplete="off" class="layui-input">
+								    </div>
+								  	
+									<button class="layui-btn layui-btn-sm layui-inline " style="margin-left: -10px;" onclick='cardReader()'>
+										<i class="layui-icon layui-icon-search layui-inline" > 读卡</i>  
+									</button>
+								</div>
+
+							 
+							 </div>
+							
+							</div>
+						   </div>
+					</div>
+			
+			</div>
+		</div>
+	</div>
+
+	
+</body>
+	<script src="../3rd/zui/js/jquery.min.js"></script>
+	<script src="../js/login.js"></script>
+</html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.PersonnelMgMapper">
+
+	<resultMap type="mecs.camel.model.Admin" id="adminMap">
+		<result column="AD_ID" property="adminId" />
+		<result column="AD_NAME" property="adminName" />
+		<result column="AD_ACCOUNT" property="adminAcc" />
+		<result column="AD_CREATE_TIME" property="adminCtime" />
+		<result column="AD_UPDATE_TIME" property="adminUtime" />
+		<result column="DEP_NAME" property="depId" />
+		<result column="DI_NAME" property="adminState" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Department" id="depMap">
+		<result column="DEP_ID" property="depId" />
+		<result column="DEP_NAME" property="depName" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Role" id="roleMap">
+		<result column="RO_ID" property="roleId" />
+		<result column="RO_NAME" property="roleName" />
+	</resultMap>
+	<resultMap type="mecs.camel.model.Admin" id="adMap">
+		<result column="AD_ID" property="adminId" />
+		<result column="AD_NAME" property="adminName" />
+		<result column="AD_ACCOUNT" property="adminAcc" />
+		<result column="AD_DEP_ID" property="depId" />
+	</resultMap>
+
+	<select id="queryAdminTable" resultMap="adminMap">
+		SELECT AD_ID,AD_NAME,AD_ACCOUNT,AD_CREATE_TIME,AD_UPDATE_TIME,DEP_NAME,DI_NAME
+		FROM T_ADMIN A INNER JOIN T_DICT B ON
+		A.AD_STATE=B.DI_CODE AND DI_TYPE='STATE'
+		INNER JOIN T_DEPARTMENT C ON
+		A.AD_DEP_ID=C.DEP_ID
+		<where>
+			<if test="adName!=null and adName!=''">
+				AND AD_NAME LIKE CONCAT('%',CONCAT(#{adName},'%'))
+			</if>
+			<if test="adAcc!=null and adAcc!=''">
+				AND AD_ACCOUNT LIKE CONCAT('%',CONCAT(#{adAcc},'%'))
+			</if>
+			<if test="adDepId!=null and adDepId!=''">
+				AND AD_DEP_ID =#{adDepId}
+			</if>
+			<if test="state!=null and state!=''">
+				AND AD_STATE=#{state}
+			</if>
+			<if test="beginDate !=null and beginDate !=''">
+				AND AD_CREATE_TIME >= TO_DATE(CONCAT( #{beginDate} ,' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endDate !=null and endDate !=''">
+				AND AD_CREATE_TIME &lt;= TO_DATE(CONCAT( #{endDate} ,' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+		ORDER BY AD_CREATE_TIME
+	</select>
+
+	<insert id="addAdmin" parameterType="mecs.camel.model.Admin">
+		<selectKey order="BEFORE" resultType="java.lang.String" keyProperty="adminId">
+			SELECT SEQ_ADMIN.NEXTVAL AS adminId
+			FROM
+			DUAL
+		</selectKey>
+		INSERT INTO T_ADMIN
+		VALUES(#{adminId},#{adminName},#{adminAcc},#{adminPawd},#{depId},1,NULL,SYSDATE,SYSDATE)
+	</insert>
+
+
+
+	<select id="queryAccIsExist" resultType="java.lang.String">
+
+		SELECT AD_ACCOUNT FROM T_ADMIN WHERE AD_ACCOUNT=#{adAcc}
+	</select>
+
+
+	<delete id="delAdmin">
+		DELETE FROM T_ADMIN WHERE AD_ID=#{adId}
+	</delete>
+
+	<select id="getAdminCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM T_ADMIN A INNER JOIN T_DICT B ON
+		A.AD_STATE=B.DI_CODE AND DI_TYPE='STATE'
+		INNER JOIN T_DEPARTMENT C
+		ON
+		A.AD_DEP_ID=C.DEP_ID
+		<where>
+			<if test="adName!=null and adName!=''">
+				AND AD_NAME LIKE CONCAT('%',CONCAT(#{adName},'%'))
+			</if>
+			<if test="adAcc!=null and adAcc!=''">
+				AND AD_ACCOUNT LIKE CONCAT('%',CONCAT(#{adAcc},'%'))
+			</if>
+			<if test="adDepId!=null and adDepId!=''">
+				AND AD_DEP_ID =#{adDepId}
+			</if>
+			<if test="state!=null and state!=''">
+				AND AD_STATE=#{state}
+			</if>
+			<if test="beginDate !=null and beginDate !=''">
+				AND AD_CREATE_TIME >= TO_DATE(CONCAT( #{beginDate} ,' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endDate !=null and endDate !=''">
+				AND AD_CREATE_TIME &lt;= TO_DATE(CONCAT( #{endDate} ,' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+
+	</select>
+	<insert id="addAdminRole">
+		INSERT INTO T_ADMIN_ROLE_LINK(ARL_ID,ARL_AD_ID,ARL_RO_ID)
+		SELECT SEQ_ADMIN_ROLE.NEXTVAL,#{adId},M.*
+		FROM(
+		<foreach collection="roleId" item="id" index="index" separator="UNION ALL">
+			(SELECT #{id} FROM DUAL)
+		</foreach>
+
+		)M
+	</insert>
+
+
+	<delete id="delAdminRole">
+		DELETE FROM T_ADMIN_ROLE_LINK WHERE ARL_AD_ID=#{adminId}
+	</delete>
+
+	<select id="getDepSelect" resultMap="depMap">
+		SELECT DEP_ID,DEP_NAME FROM T_DEPARTMENT 
+	</select>
+
+	<select id="getAllRole" resultMap="roleMap">
+		SELECT RO_ID, RO_NAME FROM T_ROLE
+	</select>
+
+	<update id="updateState">
+		UPDATE T_ADMIN SET AD_STATE=#{state} ,AD_UPDATE_TIME=SYSDATE WHERE AD_ID=#{adId}
+	</update>
+
+	<update id="reAdminPsw">
+		UPDATE T_ADMIN SET AD_PSWD=#{pswd},AD_UPDATE_TIME=SYSDATE WHERE AD_ID=#{adId}
+	</update>
+
+	<select id="getAdmin" resultMap="adMap">
+		SELECT AD_ID,AD_NAME,AD_ACCOUNT,AD_DEP_ID FROM T_ADMIN WHERE AD_ID=#{adId}
+
+	</select>
+
+	<select id="getAdminRole" resultType="java.lang.String">
+		SELECT ARL_RO_ID FROM T_ADMIN_ROLE_LINK WHERE ARL_AD_ID=#{adId}
+	</select>
+	<update id="toUpdateAdmin">
+		UPDATE T_ADMIN SET AD_NAME =#{adName} ,AD_ACCOUNT=#{adAcc},AD_DEP_ID=#{adDepId},AD_UPDATE_TIME=SYSDATE
+		WHERE AD_ID=#{adId}
+	</update>
+	<select id="getDepByState" resultMap="depMap">
+	SELECT DEP_ID,DEP_NAME FROM T_DEPARTMENT WHERE DEP_STATE!=2
+	</select>
+	
+</mapper>

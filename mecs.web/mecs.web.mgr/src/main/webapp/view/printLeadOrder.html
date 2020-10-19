@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 20px; top: 5px;">
+			<!-- 内容主体区域 -->
+			<fieldset class="layui-elem-field"
+				style="margin-top: 10px; margin-right: 3%;">
+				<legend style="font-weight: bold;">读卡</legend>
+				<div class="layui-form-item">
+					<div class="layui-inline" style="top: 4px;">
+						<label class="layui-form-label" style="top: -2px;">输入卡号</label>
+						<div class="layui-input-block">
+							<input type="text" name="cardNum" id="cardNum" autocomplete="off"
+								class="layui-input" style="height: 30px;">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+							onclick="readCard()">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+							读卡
+						</button>
+					</div>
+					<div class="layui-inline">
+						<button
+							class="layui-btn layui-btn-danger layuiadmin-btn-admin layui-btn-sm"
+							onclick="clearCardNum()">
+							<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>
+							清空
+						</button>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="layui-elem-field"
+				style="margin-top: 10px; margin-right: 3%;">
+				<legend style="font-weight: bold;">个人信息</legend>
+				<div>
+					<table class="layui-table" lay-size="sm"
+						style="margin-left: 15px; width: 97.5%; border: 0px;">
+						<colgroup>
+							<col width="200">
+							<col width="200">
+							<col>
+						</colgroup>
+						<tbody id="userInfo">
+							<tr>
+								<td id='userName'>姓名:</td>
+								<!--<td rowspan="7" style="text-align: center;"><img id="QRcode" src="" />二维码</td>-->
+							</tr>
+							<tr>
+								<td id='userSex'>性别:</td>
+							</tr>
+							<tr>
+								<td id='userAge'>年龄:</td>
+							</tr>
+							<tr>
+								<td id='userBloodType'>血型:</td>
+							</tr>
+							<tr>
+								<td id='userPhone'>电话:</td>
+							</tr>
+							<tr>
+								<td id='userBirthday'>生日:</td>
+							</tr>
+							<tr>
+								<td id='userNativeplace'>籍贯:</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</fieldset>
+			<fieldset class="layui-elem-field"
+				style="margin-top: 10px; margin-right: 3%;">
+				<legend style="font-weight: bold;">体检记录</legend>
+				<div style="margin-left: 15px;margin-right: 15px;">
+					<div class="table-head" style="left: 15px;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col width="200">
+								<col>
+							</colgroup>
+							<thead>
+								<tr class="layui-bg-cyan">
+									<th style="width: 5%;">序号</th>
+									<th style="width: 15%;">体检号</th>
+									<th style="width: 20%;">体检项目</th>
+									<th style="width: 10%;">项目费用</th>
+									<th style="width: 20%;">科室</th>
+									<th style="width: 10%;">状态</th>
+									<th style="width: 20%;">打印导检单</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-body" style="margin-top: -10px;height: 420px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col width="200">
+								<col>
+							</colgroup>
+							<tbody id="mecRecord">
+								<tr>
+									<td colspan="7" style="text-align: center; font-weight: bold;">请输入正确卡号</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</body>
+<script src="../3rd/layui/layui.js"></script>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/printLeadOrder.js"></script>
+</html>

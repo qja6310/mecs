@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.DictMapper">
+
+	<resultMap type="mecs.camel.model.Dict"
+		id="resultDictMap">
+		<result column="DI_ID" property="dictId" />
+		<result column="DI_CODE" property="dictCode" />
+		<result column="DI_NAME" property="dictName" />
+		<result column="DI_TYPE" property="dictType" />
+		<result column="DI_MEMO" property="dictMemo" />
+		<result column="DI_CREATE_TIME" property="dictCtime" />
+		<result column="DI_UPDATE_TIME" property="dictUtime" />
+	</resultMap>
+	<resultMap type="mecs.camel.model.Dict" id="dictResultMap">
+	    <result column="DI_CODE" property="dictCode" />
+		<result column="DI_NAME" property="dictName" />
+	</resultMap>
+	    <select id="getDeskInfoByDictType" resultMap="dictResultMap">
+	          SELECT 
+	             DI_CODE,DI_NAME 
+	          FROM 
+	             T_DICT 
+	          WHERE 
+	             DI_TYPE = #{type}
+	    </select>
+
+	<select id="getCardPrefix" resultType="java.lang.String">
+		SELECT 
+			DI_NAME 
+		FROM 
+			T_DICT 
+		WHERE 
+			DI_TYPE = 'PREFIX'
+	</select>
+	
+	<select id="getCardFigure" resultType="java.lang.Integer">
+		SELECT 
+			DI_NAME
+		FROM
+			T_DICT 
+		WHERE 
+			DI_TYPE = 'CARDLENGTH'
+	</select>
+
+</mapper>

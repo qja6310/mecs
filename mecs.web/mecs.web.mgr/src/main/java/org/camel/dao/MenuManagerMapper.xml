@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.MenuManagerMapper">
+	<resultMap type="mecs.camel.model.Menu" id="menuMap">
+		<result column="ME_ID" property="menuId" />
+		<result column="ME_NAME" property="menuName" />
+		<result column="PNAME" property="menuPid" />
+		<result column="ME_URL" property="menuUrl" />
+		<result column="ME_ICON" property="menuIcon" />
+		<result column="ME_MEMO" property="menuMemo" />
+		<result column="ME_CREATE_TIME" property="menuCtime" />
+		<result column="ME_UPDATE_TIME" property="menuUtime" />
+	</resultMap>
+	<resultMap type="mecs.camel.model.Menu" id="menu">
+		<result column="ME_ID" property="menuId" />
+		<result column="ME_NAME" property="menuName" />
+		<result column="ME_PID" property="menuPid" />
+		<result column="ME_URL" property="menuUrl" />
+		<result column="ME_ICON" property="menuIcon" />
+		<result column="ME_MEMO" property="menuMemo" />
+		<result column="ME_CREATE_TIME" property="menuCtime" />
+		<result column="ME_UPDATE_TIME" property="menuUtime" />
+	</resultMap>
+	<select id="queryMenuTable" resultMap="menuMap">
+		SELECT A.ME_ID,A.ME_NAME,B.ME_NAME AS PNAME,A.ME_URL,A.ME_ICON,A.ME_MEMO,A.ME_CREATE_TIME,A.ME_UPDATE_TIME FROM T_MENU
+		A LEFT JOIN T_MENU B
+		ON A.ME_PID=B.ME_ID
+
+		<where>
+			<if test="menuName!=null and menuName !=''">
+				AND A.ME_NAME LIKE CONCAT('%',CONCAT(#{menuName},'%'))
+			</if>
+			<if test="url!=null and url !=''">
+				AND A.ME_URL LIKE CONCAT('%',CONCAT(#{url},'%'))
+			</if>
+		</where>
+		ORDER BY A.ME_PID,A.ME_CREATE_TIME
+	</select>
+
+	<select id="getMenuCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_MENU
+		<where>
+			<if test="menuName!=null and menuName !=''">
+				AND ME_NAME LIKE CONCAT('%',CONCAT(#{menuName},'%'))
+			</if>
+			<if test="url!=null and url !=''">
+				AND ME_URL LIKE CONCAT('%',CONCAT(#{menuName},'%'))
+			</if>
+		</where>
+	</select>
+
+	<delete id="delMenu">
+		DELETE FROM T_MENU WHERE ME_ID=#{menuId} 
+	</delete>
+	<delete id="delMenuRole">
+		DELETE FROM T_ROLE_MENU_LINK WHERE RML_ME_ID=#{menuId}
+	</delete>
+
+	<insert id="addMenu" parameterType="mecs.camel.model.Menu">
+		INSERT INTO T_MENU VALUES
+		(SEQ_MENU.NEXTVAL,#{menuName},#{menuPid},#{menuUrl},#{menuIcon},NULL,SYSDATE,SYSDATE)
+	</insert>
+	<select id="getMenu" resultMap="menu">
+		SELECT ME_ID,ME_NAME,ME_PID,ME_URL,ME_ICON,ME_MEMO,ME_CREATE_TIME,ME_UPDATE_TIME
+		FROM T_MENU WHERE ME_ID= #{menuId}
+	</select>
+
+	<update id="updateMenu">
+		UPDATE T_MENU SET ME_NAME=#{menuName} ,ME_URL=#{menuUrl},ME_ICON=#{iccon} ,ME_UPDATE_TIME=SYSDATE
+		WHERE ME_ID=#{menuId}
+	</update>
+
+	<select id="queryMenuName" resultType="java.lang.String">
+		SELECT ME_NAME FROM T_MENU WHERE ME_NAME=#{menuName}
+	</select>
+	
+	<delete id="dellMenuByPid">
+		DELETE FROM T_MENU WHERE ME_PID=#{pid} 
+	</delete>
+
+</mapper>

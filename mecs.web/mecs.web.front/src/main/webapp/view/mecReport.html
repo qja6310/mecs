@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+
+<script src="../3rd/js/jquery.min.js"></script>
+
+<link rel="stylesheet" href="../3rd/qr/font-awesome.min.css" />
+<!-- <script src="../3rd/qr/jquery191.js"></script> -->
+<script src="../3rd/qr/bootstrap_v3.0.js"></script>
+<script src="../3rd/qr/common_d5afedb.js"></script>
+<script src="../3rd/qr/bo/index.js"></script>
+<script src="../3rd/qr/bo/jceb.msgtip.js"></script>
+<script src="../3rd/qr/bo/cli-qrcode_95a0632.js"></script>
+<link rel="stylesheet" href="../3rd/qr/bo/page-deqr_dc1e9e9.css" />
+<link rel="stylesheet" href="../css/new_file.css" />
+<link rel="stylesheet" href="../3rd/res/static/css/index.css">
+</head>
+<body>
+	<div>
+		<div class="nav index">
+			<div class="layui-container">
+				<!-- 公司logo -->
+				<div class="nav-logo" style="margin-left: -4%;">
+					<a href="healthCheckup.html"> <span
+						style="background: transparent; font-weight: bold; color: #669999; font-size: 40px; font-family: '华文行楷';">自贡康桥健康体检中心</span>
+					</a>
+				</div>
+				<div class="nav-list">
+					<button>
+						<span></span><span></span><span></span>
+					</button>
+					<ul class="layui-nav" lay-filter=""
+						style="font-weight: bold; font-size: 40px;">
+						<li class="layui-nav-item"><a href="healthCheckup.html">返回首页</a></li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+		<div class="layui-body" style="left: 15px; top: 80px; right: 15px;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -40px">
+					<label class="layui-form-label ">体检卡号</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="cardNum" lay-verify="required"
+							placeholder="请输入体检卡号" autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;">
+					</div>
+				</div>
+
+				<div class="layui-inline" style="margin: 0px 0px 0px -40px;">
+					<label class="layui-form-label">体检号码</label>
+					<div class="layui-input-block">
+						<input type="text" name="" id="mecCode" placeholder="请输入体检号码"
+							autocomplete="off" class="layui-input"
+							style="width: 250px; height: 30px;"
+							oninput="value=value.replace(/[^\d]/g,'')" maxlength="11">
+					</div>
+				</div>
+				<div class="layui-inline" style="margin: 0px 0px 10px 20px;">
+					<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+						id="search" lay-submit lay-filter="LAY-user-back-search"
+						style="width: 100px" onclick="readCard()">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>搜索
+					</button>
+				</div>
+				<div class="layui-inline" style="margin: 0px 0px 10px 6px;">
+					<div id="deqrcamera"">
+						<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+							title='扫描二维码自动获取体检号码'>
+							<i
+								class="layui-icon layui-icon-camera-fill layuiadmin-button-btn"></i>
+							扫描二维码
+						</button>
+					</div>
+				</div>
+				<div class="layui-inline" style="margin: 0px 0px 10px 6px;">
+					<button type="button" id="clean"
+						class="layui-btn layui-btn-danger layui-btn-sm"
+						style="width: 100px" onclick="clearInfo()">
+						<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>清空
+					</button>
+				</div>
+			</div>
+			<!--表格内容-->
+			<div>
+				<div class="layui-form">
+					<div class="table-head">
+						<table class="layui-table" style="width: 100%;">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<thead>
+								<tr class="layui-bg-cyan">
+									<th style="width: 10%";>序号</th>
+									<th style="width: 15%";>体检码</th>
+									<th style="width: 30%";>体检套餐</th>
+									<th style="width: 10%";>消费金额</th>
+									<th style="width: 20%";>开单日期</th>
+									<th style="width: 15%";>打印体检报告</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-body" style="height: 420px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<tbody id="mecRecord">
+								<tr>
+									<td colspan="6" style="text-align: center; font-weight: bold;">请先输入卡号或者体检码</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="foot" style="margin-top: 50px;">
+				<div class="footer_tips" style="background-color: white;">
+					<div class="footer_tips_body" style="padding-left: 165px;">
+						<ul>
+							<li><b>新手指南</b></li>
+							<li><a href="/help/us_3.html" target="_blank"
+								rel="external nofollow">新会员注册</a></li>
+							<li><a href="/help/us_4.html" target="_blank"
+								rel="external nofollow">用户登录</a></li>
+							<li><a href="/help/us_29.html" target="_blank"
+								rel="external nofollow">关于我们</a></li>
+							<li><a href="/help/hospitalmap.html" target="_blank"
+								rel="external nofollow">医院大全</a></li>
+							<li><a href="/help/sitemap.html" target="_blank"
+								rel="external nofollow">网站地图</a></li>
+						</ul>
+						<ul>
+							<li><b>常见问题</b></li>
+							<li><a href="/help/us_6.html" target="_blank"
+								rel="external nofollow">预约流程</a></li>
+							<li><a href="/help/us_7.html" target="_blank"
+								rel="external nofollow">检前注意事项</a></li>
+							<li><a href="/help/us_8.html" target="_blank"
+								rel="external nofollow">体检流程</a></li>
+						</ul>
+						<ul>
+							<li><b>售后服务</b></li>
+							<li><a href="/help/us_9.html" target="_blank"
+								rel="external nofollow">退款规则</a></li>
+							<li><a href="/help/us_10.html" target="_blank"
+								rel="external nofollow">修改预约信息</a></li>
+							<li><a href="/help/us_325.html" target="_blank"
+								rel="external nofollow">用户注册使用协议</a></li>
+							<li><a href="/yszx.html" target="_blank"
+								rel="external nofollow">检后咨询</a></li>
+						</ul>
+						<ul>
+							<li><b>机构服务</b></li>
+							<li><a href="/help/us_12.html" target="_blank"
+								rel="external nofollow">机构入驻</a></li>
+							<li><a href="/help/us_13.html" target="_blank"
+								rel="external nofollow">企业团检</a></li>
+							<li><a href="/help/us_14.html" target="_blank"
+								rel="external nofollow">渠道合作</a></li>
+							<li><a href="/help/us_309.html" target="_blank"
+								rel="external nofollow">专家专栏</a></li>
+						</ul>
+						<ul class="footer_code">
+							<li><b>微信公众号</b></li>
+							<li><em>扫码关注：</em><img src="../img/wxcodebottom.jpg"
+								width="109" height="109"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div
+		style='margin-left: 30%; margin-top: 0%; display: none; position: absolute; z-index: 9999'
+		class="modal fade" id="htmlScanModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content"
+				style="width: 430px; height: 370px; position: absolute; z-index: 999;">
+				<div class="modal-header">
+					<button type="button" class="close" onclick='closeee()'
+						data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">二维码扫描</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scanner">
+						<video id="scanVideo" width="400" height="400"
+							style="margin-top: -80px"></video>
+					</div>
+					<div id="scan-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- <script src="../3rd/js/jquery.min.js"></script> -->
+<script src="../js/mecReport.js"></script>
+
+</html>

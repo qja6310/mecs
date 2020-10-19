@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-body" style="left: 20px; top: 5px;">
+			<!-- 内容主体区域 -->
+			<fieldset class="layui-elem-field site-demo-button"
+				style="margin-top: 10px;">
+				<legend style="font-weight: bold;">读卡</legend>
+				<div class="layui-form-item">
+					<div class="layui-inline" style="top: 4px;">
+						<label class="layui-form-label" style="top: -2px;">输入卡号</label>
+						<div class="layui-input-block">
+							<input type="text" name="cardNum" id="cardNum" autocomplete="off"
+								class="layui-input" style="height: 30px;">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+							onclick="readCard()">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+							读卡
+						</button>
+					</div>
+					<div class="layui-inline">
+						<button
+							class="layui-btn layui-btn-danger layuiadmin-btn-admin layui-btn-sm"
+							onclick="clearCardNum()">
+							<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>
+							清空
+						</button>
+					</div>
+					<div class="layui-inline">
+						<a href="#comboPanel">
+							<button
+								class="layui-btn layui-btn-normal layuiadmin-btn-admin layui-btn-sm">
+								<i
+									class="layui-icon layui-icon-add-circle layuiadmin-button-btn"></i>
+								选择套餐
+							</button>
+						</a>
+					</div>
+					<div class="layui-inline" style="top: 4px; left: 2%;">
+						<label class="layui-form-label" style="top: -2px;">余额</label>
+						<div class="layui-input-block">
+							<input type="text" name="cardBalance" id="cardBalance"
+								autocomplete="off" class="layui-input" readonly="readonly"
+								style="height: 30px">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="layui-elem-field site-demo-button"
+				style="margin-top: 10px;">
+				<legend style="font-weight: bold;">用户信息</legend>
+				<div style="margin-bottom: 10px;">
+					<div class="layui-inline">
+						<label class="layui-form-label">姓名</label>
+						<div class="layui-input-block">
+							<input type="text" name="userName" id="userName"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">性别</label>
+						<div class="layui-input-block">
+							<input type="text" name="userSex" id="userSex" autocomplete="off"
+								class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">年龄</label>
+						<div class="layui-input-block">
+							<input type="text" name="userAge" id="userAge" autocomplete="off"
+								class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<br /> <br />
+					<div class="layui-inline">
+						<label class="layui-form-label">血型</label>
+						<div class="layui-input-block">
+							<input type="text" name="userBloodType" id="userBloodType"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">出生年月</label>
+						<div class="layui-input-block">
+							<input type="text" name="userBirthday" id="userBirthday"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">联系电话</label>
+						<div class="layui-input-block">
+							<input type="text" name="userPhone" id="userPhone"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<br /> <br />
+					<div class="layui-inline">
+						<label class="layui-form-label">籍贯</label>
+						<div class="layui-input-block">
+							<input type="text" name="userNativeplace" id="userNativeplace"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+					<div class="layui-inline" style="width: 587px;">
+						<label class="layui-form-label">现住址 </label>
+						<div class="layui-input-block">
+							<input type="text" name="userAddress" id="userAddress"
+								autocomplete="off" class="layui-input" readonly="readonly">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="layui-elem-field site-demo-button"
+				style="margin-top: 10px;">
+				<legend style="font-weight: bold;">体检记录</legend>
+				<div class="table-head"
+					style="margin-left: 15px; margin-right: 15px;">
+					<table class="layui-table" lay-size="sm">
+						<colgroup>
+							<col width="200">
+							<col width="200">
+							<col>
+						</colgroup>
+						<thead>
+							<tr class="layui-bg-cyan">
+								<th style="width: 5%;">序号</th>
+								<th style="width: 10%;">卡号</th>
+								<th style="width: 20%;">套餐</th>
+								<th style="width: 5%;">金额</th>
+								<th style="width: 10%;">总检医生</th>
+								<th style="width: 30%;">总检建议</th>
+								<th style="width: 10%;">状态</th>
+								<th style="width: 10%;">时间</th>
+							</tr>
+						</thead>
+					</table>
+					<div class="table-body" style="height: 420px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm" style="margin-top: 0px;">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<tbody id="mecRecord">
+								<tr>
+									<td colspan="8" style="text-align: center; font-weight: bold;">请先读卡</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+			</fieldset>
+			<fieldset class="layui-elem-field site-demo-button" id='comboPanel'
+				style="margin-top: 30px;">
+				<legend style="font-weight: bold;">套餐选择</legend>
+				<div class="layui-card-body">
+					<div style="margin-left: -10%;">
+						<div class="layui-inline" style="width: 50%; top: 3px;">
+							<div class="layui-input-block">
+								<input type="text" name="comboName" id="comboName"
+									placeholder="套餐名" autocomplete="off" class="layui-input"
+									style="height: 30px;">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<div style="margin-left: -110px;margin-right: 15px;">
+								<div class="layui-input-block" style="margin-top: 7px;">
+									<select id="comboState"
+										style="width: 120%; height: 30px; border: 0px;">
+										<option value="">请选择</option>
+										<option value="1" selected>上架</option>
+										<option value="0">下架</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-admin layui-btn-sm"
+								onclick="getAllComboInfoByComboName()">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+								搜索
+							</button>
+						</div>
+						<div class="layui-inline">
+							<button
+								class="layui-btn layui-btn-danger layuiadmin-btn-admin layui-btn-sm"
+								onclick="clearComboName()">
+								<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i>
+								清空
+							</button>
+						</div>
+						<div class="layui-inline">
+							<button
+								class="layui-btn layui-btn-normal layuiadmin-btn-admin layui-btn-sm"
+								onclick="sureBilling()">
+								<i class="layui-icon layui-icon-tabs layuiadmin-button-btn"></i>
+								开单
+							</button>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">总价</label>
+							<div class="layui-input-block">
+								<input type="text" name="totalPrice" id="totalPrice"
+									autocomplete="off" class="layui-input"
+									style="height: 30px; width: 100px; text-align: right; right: 5px; font-weight: bold;"
+									readonly="readonly">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label style="font-weight: bold; color: red;">元</label>
+						</div>
+					</div>
+					<div class="table-head">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<thead>
+								<tr class="layui-bg-cyan">
+									<th style="width: 5%;">选择</th>
+									<th style="width: 5%;">序号</th>
+									<th style="width: 25%;">套餐</th>
+									<th style="width: 10%;">价格</th>
+									<th style="width: 25%;">备注</th>
+									<th style="width: 10%;">状态</th>
+									<th style="width: 20%;">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-body comboCheckBox"
+						style="height: 390px; overflow-y: scroll;">
+						<table class="layui-table" lay-size="sm">
+							<colgroup>
+								<col width="200">
+								<col />
+							</colgroup>
+							<tbody id="comboTbody">
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</body>
+<script src="../3rd/layui/layui.js"></script>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/billingOrder.js"></script>
+<!-- <script src="../js/comboDetails.js"></script> -->
+<link rel="stylesheet" href="../css/billingOrder.css">
+
+</html>

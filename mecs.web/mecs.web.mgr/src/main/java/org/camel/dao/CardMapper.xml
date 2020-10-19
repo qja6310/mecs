@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.CardMapper">
+
+	<resultMap type="mecs.camel.model.dto.CardDto"
+		id="resultCardMap">
+		<result column="CA_ID" property="cardId" />
+		<result column="CA_NUMBER" property="cardNum" />
+		<result column="CA_USER_ID" property="userId" />
+		<result column="CA_BALANCE" property="balance" />
+		<result column="CA_STORE_ADMIN_ID" property="enterAdminId" />
+		<result column="CA_SELL_ADMIN_ID" property="sellAdminId" />
+		<result column="CA_STATE" property="cardState" />
+		<result column="CA_MEMO" property="cardMemo" />
+		<result column="CA_CREATE_DATE" property="cardCtime" />
+		<result column="CA_UPDATE_DATE" property="cardUtime" />
+		<result column="NAME" property="user.userName" />
+		<result column="DI_NAME" property="dict.dictName" />
+	</resultMap>
+
+	<select id="getAllCardNumber" resultType="java.lang.String">
+		SELECT
+		CA_NUMBER
+		FROM
+		T_CARD
+	</select>
+
+	<insert id="addCard">
+		INSERT INTO T_CARD
+		(CA_ID,CA_NUMBER,CA_STATE,CA_STORE_ADMIN_ID,CA_CREATE_DATE)
+		SELECT
+		SEQ_CARD.NEXTVAL,T.*,0,#{adminId},SYSDATE
+		FROM(
+		<foreach collection="cardList" item="cardNumber" index="index"
+			separator="UNION ALL">
+			SELECT #{cardNumber} FROM DUAL
+		</foreach>
+		)T
+	</insert>
+
+	<delete id="delCard">
+		DELETE FROM T_CARD WHERE CA_ID = #{id}
+	</delete>
+
+	<select id="getAllCard" resultMap="resultCardMap">
+		SELECT
+		CA_ID,
+		CA_NUMBER,
+		CA_BALANCE,
+		CA_USER_ID,
+		CA_STATE,
+		CA_STORE_ADMIN_ID,
+		CA_SELL_ADMIN_ID,
+		CA_MEMO,
+		CA_CREATE_DATE,
+		CA_UPDATE_DATE,
+		NVL( U.US_NAME, ' ' ) NAME,
+		D.DI_NAME
+		FROM
+		T_CARD T
+		LEFT
+		JOIN
+		T_USER U ON U.US_ID
+		= T.CA_USER_ID
+		LEFT
+		JOIN T_DICT
+		D ON
+		D.DI_CODE =
+		T.CA_STATE
+		AND D.DI_TYPE
+		=
+		'CARDSTATE'
+		<where>
+			<if test="cardNumber!=null and cardNumber!=''">
+				AND CA_NUMBER LIKE CONCAT('%',CONCAT(#{cardNumber},'%'))
+			</if>
+			<if test="name!=null and name!=''">
+				AND US_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="state!=null and state!=''">
+				AND CA_STATE =#{state}
+			</if>
+			<if test="start !=null and start !=''">
+				AND CA_CREATE_DATE &gt;= TO_DATE(CONCAT( #{start} ,'
+				00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="end !=null and end !=''">
+				AND CA_CREATE_DATE &lt;= TO_DATE(CONCAT( #{end} ,'
+				23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+		ORDER BY CA_NUMBER
+		ASC
+	</select>
+
+	<select id="getAllCardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM
+		(SELECT
+		CA_ID,
+		CA_NUMBER,
+		CA_BALANCE,
+		CA_USER_ID,
+		CA_STATE,
+		CA_STORE_ADMIN_ID,
+		CA_SELL_ADMIN_ID,
+		CA_MEMO,
+		CA_CREATE_DATE,
+		CA_UPDATE_DATE,
+		NVL( U.US_NAME, ' ' ) NAME,
+		D.DI_NAME
+		FROM
+		T_CARD T
+		LEFT
+		JOIN
+		T_USER U ON U.US_ID
+		= T.CA_USER_ID
+		LEFT
+		JOIN T_DICT
+		D ON
+		D.DI_CODE =
+		T.CA_STATE
+		AND D.DI_TYPE
+		=
+		'CARDSTATE'
+		<where>
+			<if test="cardNumber!=null and cardNumber!=''">
+				AND CA_NUMBER LIKE CONCAT('%',CONCAT(#{cardNumber},'%'))
+			</if>
+			<if test="name!=null and name!=''">
+				AND US_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="state!=null and state!=''">
+				AND CA_STATE =#{state}
+			</if>
+			<if test="start !=null and start !=''">
+				AND CA_CREATE_DATE &gt;= TO_DATE(CONCAT( #{start} ,'
+				00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="end !=null and end !=''">
+				AND CA_CREATE_DATE &lt;= TO_DATE(CONCAT( #{end} ,'
+				23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+		ORDER BY CA_NUMBER
+		ASC
+		)
+	</select>
+
+</mapper>

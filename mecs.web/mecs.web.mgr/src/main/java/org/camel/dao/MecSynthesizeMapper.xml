@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.MecSynthesizeMapper">
+	<resultMap type="mecs.camel.model.MecSynthesize" id="msResultMap">
+		<result column="US_NAME" property="userName" />
+		<result column="US_PHONE" property="userPhone" />
+		<result column="MR_NUMBER" property="mecCode" />
+		<result column="IR_ITS_NAME" property="itemsName" />
+		<!-- <result column="IR_REQ" property="itemsRes" /> -->
+		<result column="AD_NAME" property="mrDoc" />
+		<result column="PETIME" property="irPeTime" />
+	</resultMap>
+
+	<!-- 体检综合查询数据 -->
+	<select id="getMecSynthesize" resultMap="msResultMap">
+		SELECT
+		US.US_NAME,US.US_PHONE,MR.MR_NUMBER,IR.IR_ITS_NAME,AD.AD_NAME,
+		TO_CHAR(IR.IR_PE_TIME,'YYYY-MM-DD HH24:MI:SS') AS PETIME
+		FROM T_ITEMS_RECORD IR LEFT JOIN T_MEC_RECORD MR ON MR.MR_ID = IR.IR_MR_ID
+		LEFT JOIN T_CARD CA ON CA.CA_ID = MR.MR_CA_ID
+		LEFT JOIN T_USER US ON US.US_ID = CA.CA_USER_ID
+        LEFT JOIN T_ADMIN AD ON AD.AD_ID = MR.MR_DOC_ID
+		<where>
+			<if test="userName != null and userName != ''">
+				AND US.US_NAME LIKE CONCAT('%',CONCAT(#{userName},'%'))
+			</if>
+			<if test="userTel != null and userTel != ''">
+				AND US.US_PHONE = #{userTel}
+			</if>
+			<if test="mecCode != null and mecCode != ''">
+				AND MR.MR_NUMBER = #{mecCode}
+			</if>
+			<if test="sTime != null and sTime != ''">
+				AND IR.IR_PE_TIME &gt;= TO_DATE(CONCAT(#{sTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="eTime != null and eTime != ''">
+				AND IR.IR_PE_TIME &lt;= TO_DATE(CONCAT(#{eTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 获取综合查询的记录数 -->
+	<select id="getMecSynthesizeCount" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM T_ITEMS_RECORD IR LEFT JOIN T_MEC_RECORD MR ON MR.MR_ID = IR.IR_MR_ID
+		LEFT JOIN T_CARD CA ON CA.CA_ID = MR.MR_CA_ID
+		LEFT JOIN T_USER US ON US.US_ID = CA.CA_USER_ID
+		<where>
+			<if test="userName != null and userName != ''">
+				AND US.US_NAME LIKE CONCAT('%',CONCAT(#{userName},'%'))
+			</if>
+			<if test="userTel != null and userTel != ''">
+				AND US.US_PHONE = #{userTel}
+			</if>
+			<if test="mecCode != null and mecCode != ''">
+				AND MR.MR_NUMBER = #{mecCode}
+			</if>
+			<if test="sTime != null and sTime != ''">
+				AND IR.IR_PE_TIME &gt;= TO_DATE(CONCAT(#{sTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="eTime != null and eTime != ''">
+				AND IR.IR_PE_TIME &lt;= TO_DATE(CONCAT(#{eTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+	</select>
+</mapper>

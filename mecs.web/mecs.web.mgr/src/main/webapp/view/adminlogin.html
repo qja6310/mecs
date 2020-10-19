@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="x-admin-sm">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>后台登录</title>
+		<link rel="stylesheet" href="../3rd/admin/css/font.css">
+		<link rel="stylesheet" href="../3rd/admin/css/login.css">
+		<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+		<!--导入lay css  -->
+	    <link rel="stylesheet" href="../3rd/layui/css/layui.css">
+	</head>
+
+	<body class="login-bg">
+
+		<div class="login layui-anim layui-anim-up">
+			<div class="message">后台登录</div>
+			<div id="darkbannerwrap"></div>
+
+			<form  class="layui-form" >
+				<input name="adminName" id="adminName" placeholder="账号" type="text" lay-verify="required" class="layui-input">
+				<hr class="hr15">
+				<input name="passWord"  id="passWord" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+				<hr class="hr15">
+				<input name="code" id="code" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" maxlength="4" lay-verify="required" placeholder="验证码"  type="text"  style="width: 140px">
+				<img id="codeImg" alt="请刷新验证码" src="../getKeyCode.action" style="height: 50px;width: 190px; margin-left: 5px;" title = "看不清楚，换一张"  
+				 onclick = "chageImage(this)" />
+				<hr class="hr15">
+				<input value="登录"  id="loginButton" onclick="doLogin()" style="width:100%;" type="button">
+				<hr class="hr20">
+			</form>
+		</div>
+	</body>
+	<script src="../3rd/js/jquery.min.js"></script>
+	<script src="../3rd/layui/layui.js"></script>
+	<script src="../3rd/js/jsencrypt.min.js"></script>
+	<script src="../3rd/js/security.js"></script>
+	<script src="../js/adminlogin.js"></script>
+	
+	
+	
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.ItemsMapper">
+
+	<resultMap type="mecs.camel.model.Items" id="itemsResultMap">
+		<result column="ITS_ID" property="itemsId" />
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<result column="DEP_NAME" property="depId" />
+		<result column="ITS_MEMO" property="itemsDemo" />
+		<result column="ITS_CREATE_TIME" property="itemsCtime" />
+		<result column="ITS_UPDATE_TIME" property="itemsUtime" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Item" id="itemMap">
+		<result column="IT_ID" property="itemId" />
+		<result column="IT_NAME" property="itemName" />
+		<result column="IT_UNIT" property="itemUnit" />
+
+	</resultMap>
+	<resultMap type="mecs.camel.model.Items" id="itemstMap">
+		<result column="ITS_ID" property="itemsId" />
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<result column="DEP_NAME" property="depId" />
+		<result column="ITS_MEMO" property="itemsDemo" />
+		<result column="ITS_CREATE_TIME" property="itemsCtime" />
+		<result column="ITS_UPDATE_TIME" property="itemsUtime" />
+	</resultMap>
+		<resultMap type="mecs.camel.model.Items" id="items">
+		<result column="ITS_ID" property="itemsId" />
+		<result column="ITS_NAME" property="itemsName" />
+		<result column="ITS_PRICE" property="itemsPrice" />
+		<result column="ITS_DEP_ID" property="depId" />
+		<result column="ITS_MEMO" property="itemsDemo" />
+		<result column="ITS_CREATE_TIME" property="itemsCtime" />
+		<result column="ITS_UPDATE_TIME" property="itemsUtime" />
+	</resultMap>
+	
+	<select id="getAllItems" resultMap="itemsResultMap">
+		SELECT
+		I.* ,
+		D.DEP_NAME
+		FROM
+		T_ITEMS I
+		LEFT JOIN T_DEPARTMENT D ON D.DEP_ID = I.ITS_DEP_ID
+		<where>
+			<if test="name!=null and name!=''">
+				AND ITS_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="dep!=null and dep!=''">
+				AND ITS_DEP_ID = #{dep}
+			</if>
+		</where>
+	</select>
+
+	<select id="getAllItemsCount" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(SELECT
+		*
+		FROM
+		T_ITEMS
+		<where>
+			<if test="name!=null and name!=''">
+				AND ITS_NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+		</where>
+		)
+	</select>
+
+	<delete id="delItems">
+		DELETE
+		FROM
+		T_ITEMS
+		WHERE
+		ITS_ID =
+		#{id}
+	</delete>
+
+	<insert id="addItems">
+
+		<selectKey order="BEFORE" resultType="java.lang.String" keyProperty="itemsId">
+			SELECT SEQ_ITEMS.NEXTVAL AS itemsId
+			FROM
+			DUAL
+		</selectKey>
+		INSERT INTO T_ITEMS
+		VALUES(#{itemsId},#{itemsName},#{itemsPrice},#{depId},NULL,SYSDATE,SYSDATE)
+
+	</insert>
+
+	<update id="alterItems">
+		UPDATE T_ITEMS SET ITS_NAME = #{ name }, ITS_PRICE =#{ price },ITS_DEP_ID=#{depId}
+		WHERE
+		ITS_ID = #{
+		id}
+	</update>
+
+	<select id="getAllItem" resultMap="itemMap">
+		SELECT IT_ID, IT_NAME ,IT_UNIT FROM T_ITEM
+	</select>
+
+	<select id="QueryItemsName" resultType="java.lang.String">
+		SELECT ITS_NAME FROM T_ITEMS WHERE ITS_NAME =#{itemsName}
+	</select>
+
+
+	<select id="getItemsById" resultMap="items">
+		SELECT ITS_ID,ITS_NAME,ITS_PRICE,ITS_DEP_ID ,ITS_MEMO
+		,ITS_CREATE_TIME,ITS_UPDATE_TIME 
+		FROM T_ITEMS   WHERE ITS_ID=#{itemsId}
+	</select>
+	
+	<select id="lookItemsById" resultMap="itemstMap">
+		SELECT ITS_ID,ITS_NAME,ITS_PRICE,DEP_NAME ,ITS_MEMO
+		,ITS_CREATE_TIME,ITS_UPDATE_TIME 
+		FROM T_ITEMS  A INNER JOIN T_DEPARTMENT B 
+		ON A.ITS_DEP_ID=B.DEP_ID  WHERE ITS_ID=#{itemsId}
+	</select>
+</mapper>

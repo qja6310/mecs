@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.RoleManagerMapper">
+
+	<resultMap type="mecs.camel.model.Role" id="roleMap">
+		<result column="RO_ID" property="roleId" />
+		<result column="RO_NAME" property="roleName" />
+		<result column="RO_MEMO" property="roleMemo" />
+		<result column="RO_CREATE_TIME" property="roleCtime" />
+		<result column="RO_UPDATE_TIME" property="roleUtime" />
+	</resultMap>
+
+	<resultMap type="mecs.camel.model.Menu" id="menuMap">
+		<result column="ME_ID" property="menuId" />
+		<result column="ME_NAME" property="menuName" />
+		<result column="ME_PID" property="menuPid" />
+	</resultMap>
+
+	<select id="queryRoleTable" resultMap="roleMap">
+		SELECT RO_ID,RO_NAME,RO_CREATE_TIME,RO_UPDATE_TIME FROM T_ROLE
+		<where>
+			<if test="roleName!=null and roleName!=''">
+				AND RO_NAME LIKE CONCAT('%',CONCAT(#{roleName},'%'))
+			</if>
+
+			<if test="beginDate !=null and beginDate !=''">
+				AND RO_CREATE_TIME >= TO_DATE(CONCAT( #{beginDate} ,' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endDate !=null and endDate !=''">
+				AND RO_CREATE_TIME &lt;= TO_DATE(CONCAT( #{endDate} ,' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+		ORDER BY RO_CREATE_TIME
+	</select>
+
+
+	<select id="getRoleCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)FROM T_ROLE
+		<where>
+			<if test="roleName!=null and roleName!=''">
+				AND RO_NAME LIKE CONCAT('%',CONCAT(#{roleName},'%'))
+			</if>
+
+			<if test="beginDate !=null and beginDate !=''">
+				AND RO_CREATE_TIME >= TO_DATE(CONCAT( #{beginDate} ,' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endDate !=null and endDate !=''">
+				AND RO_CREATE_TIME &lt;= TO_DATE(CONCAT( #{endDate} ,' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+		</where>
+
+	</select>
+	<delete id="delRole">
+		DELETE FROM T_ROLE WHERE RO_ID=#{roleId}
+	</delete>
+
+	<delete id="delAdRole">
+		DELETE FROM T_ADMIN_ROLE_LINK WHERE ARL_RO_ID = #{roleId}
+	</delete>
+
+	<delete id="delRoleMenu">
+		DELETE FROM T_ROLE_MENU_LINK WHERE RML_RO_ID = #{roleId}
+	</delete>
+
+	<select id="showAllMenu" resultMap="menuMap">
+		SELECT ME_ID,ME_NAME,ME_PID FROM T_MENU
+	</select>
+
+	<insert id="addRole" parameterType="mecs.camel.model.Role">
+		<selectKey order="BEFORE" resultType="java.lang.String" keyProperty="roleId">
+			SELECT SEQ_ROLE.NEXTVAL AS roleId
+			FROM
+			DUAL
+		</selectKey>
+		INSERT INTO T_ROLE
+		VALUES(#{roleId},#{roleName},NULL,SYSDATE,SYSDATE)
+	</insert>
+
+	<insert id="addRoleMenu">
+		INSERT INTO T_ROLE_MENU_LINK(RML_ID,RML_RO_ID,RML_ME_ID)
+		SELECT SEQ_ROLE_MENU.NEXTVAL,#{roleId},M.*
+		FROM(
+		<foreach collection="list" item="id" index="index" separator="UNION ALL">
+			SELECT #{id} FROM DUAL
+		</foreach>
+
+		)M
+	</insert>
+
+
+	<select id="queryRoleName" resultType="java.lang.String">
+		SELECT RO_NAME FROM T_ROLE WHERE RO_NAME=#{roleName}
+	</select>
+
+	<select id="getRole" resultMap="roleMap">
+		SELECT RO_ID,RO_NAME FROM T_ROLE WHERE RO_ID=#{roleId}
+	</select>
+
+
+	<select id="getRoleMenu" resultType="java.lang.String">
+		SELECT RML_ME_ID FROM T_ROLE_MENU_LINK WHERE RML_RO_ID =#{roleId}
+	</select>
+	
+	<update id="updateRoleName">
+	UPDATE T_ROLE SET RO_NAME =#{roleName},RO_UPDATE_TIME=SYSDATE WHERE RO_ID=#{roleId}
+	</update>
+	
+</mapper>

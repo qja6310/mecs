@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <meta name="format-detection" content="telephone=no">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>健康体检-首页</title>
+
+<link rel="stylesheet" href="../3rd/res/layui/css/layui.css">
+<link rel="stylesheet" href="../3rd/res/static/css/index.css">
+<link rel="stylesheet" href="../3rd/res/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/res/admin/css//xadmin.css">
+<link rel="stylesheet" type="text/css" href="../3rd/zui/css/nav.css">
+<link rel="stylesheet" href="../3rd/zui/css/bootstrap.min.css">
+<link rel="stylesheet" href="../3rd/zui/css/bootstrap-select.css">
+<link href="../3rd/zui/css/style.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="../3rd/zui/css/flexslider.css"
+	type="text/css" media="screen" />
+<link rel="stylesheet" href="../3rd/zui/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../3rd/zui/css/index.css" />
+<link rel="stylesheet" href="../3rd/zui/3rd/zui/css/zui.min.css">
+<script src="../3rd/res/layui/layui.js"></script>
+ <link rel="stylesheet" href="../css/demo.css"> 
+ <link rel="stylesheet" href="../css/new_file.css" />
+</head>
+
+<body>
+	<!-- nav部分 -->
+	<div class="nav index">
+		<div class="layui-container">
+			<!-- 公司logo -->
+			<div class="nav-logo" style="margin-left: -7%;">
+				<a href="healthCheckup.html"> <span
+					style="background: transparent; font-weight: bold; color: #669999; font-size: 40px; font-family: '华文行楷';">自贡康桥健康体检中心</span>
+				</a>
+			</div>
+			<div class="nav-list">
+				<ul class="layui-nav" lay-filter=""
+					style="font-weight: bold; font-size: 40px;margin-right: -20%;width: 600px">
+					<li class="layui-nav-item"><a href="healthCheckup.html">首页</a></li>
+					<li id='loginfirst' class="layui-nav-item"><a
+						onclick='login11()'>登录</a></li>
+					<li id='sign' class="layui-nav-item" style='display: none'><i
+						id='loginName'>欢迎您:</i></li>
+					<li id='logont' class="layui-nav-item" style='display: none'><a
+						onclick='logout()'>注销</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+	<!-- banner部分 -->
+	<div>
+		<div class="layui-carousel" id="banner">
+			<div carousel-item>
+				<div>
+					<img src="../3rd/res/static/img/banner1.jpg">
+				</div>
+				<div>
+					<img src="../3rd/res/static/img/banner2.jpg">
+				</div>
+				<div>
+					<img src="../3rd/res/static/img/banner3.jpg">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- main部分 -->
+	<div class="main-product"
+		style="background-image: url(../img/beijing12.jpg); background-size: 100% 100%;">
+		<div class="layui-container" style="width: 99%;">
+			<div class="layui-row layui-col-space25">
+				<div class="content">
+					<div id="billing" class="col-md-2 focus-grid"
+						style="width: 280px; margin-left: 11%" 
+						data-target="#myModal">
+						<div class="">
+							<div class="focus-layout" style="opacity: 0.8; height:360px;margin-top: 70px;">
+								<div class="focus-image">
+									<i>
+										<div>
+											<img src="../3rd/res/static/img/log001.png" width="130px" height="130px">
+										</div>
+									</i>
+								</div>
+								<h4 class="clrchg" style="font-weight: bold;font-size: 25px;">开单</h4>
+							</div>
+						</div>
+					</div>
+					<div id="report" class="col-md-2 focus-grid" style="width: 280px;"
+						 data-target="#myModal">
+						<div class="">
+							<div class="focus-layout" style="opacity: 0.8; height:360px;margin-top: 70px;">
+								<div class="focus-image">
+									<i>
+										<div>
+											<img src="../3rd/res/static/img/Big_icon4.png" width="130px" height="130px">
+										</div>
+									</i>
+								</div>
+								<h4 class="clrchg" style="font-weight: bold;font-size: 25px;">体检报告</h4>
+							</div>
+						</div>
+					</div>
+					<div id="recharge" class="col-md-2 focus-grid"
+						style="width: 280px;"  data-target="#myModal">
+						<div class="">
+							<div class="focus-layout" style="opacity: 0.8; height:360px;margin-top: 70px;">
+								<div class="focus-image">
+									<i>
+										<div>
+											<img src="../3rd/res/static/img/Big_icon1.png" width="130px" height="130px">
+										</div>
+									</i>
+								</div>
+								<h4 class="clrchg" style="font-weight: bold;font-size: 25px;">用户充值</h4>
+							</div>
+						</div>
+					</div>
+
+					<div id='account' class="col-md-2 focus-grid" style="width: 280px;"
+						data-target="#myModal">
+						<div class="">
+							<div class="focus-layout" style="opacity: 0.8; height:360px;margin-top: 70px;">
+								<div class="focus-image">
+									<i>
+										<div>
+											<img src="../3rd/res/static/img/Big_icon3.png" width="130px" height="130px">
+										</div>
+									</i>
+								</div>
+								<h4 class="clrchg" style="font-weight: bold;font-size: 25px;">个人对账</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-service">
+		<div class="layui-container">
+			<p class="title">
+				为您量身定制<span>专属体检</span>
+			</p>
+			<div class="layui-row layui-col-space25 layui-col-space80">
+				<div class="layui-col-sm6">
+					<div class="content">
+						<div class="content-left">
+							<img src="../3rd/res/static/img/home_img1.jpg">
+						</div>
+						<div class="content-right">
+							<p class="label" style="font-size: 35px;">优质团队</p>
+							<span></span>
+							<p style="font-size: 20px;">医院引进大批专业人才，为您的健康提供更专业的服务。</p>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-sm6">
+					<div class="content">
+						<div class="content-left">
+							<img src="../3rd/res/static/img/home_img2.jpg">
+						</div>
+						<div class="content-right">
+							<p class="label" style="font-size: 35px;">专业诊断</p>
+							<span></span>
+							<p style="font-size: 20px;">知名专家为您的健康提供更优质的指引，让您更放心、更安心。</p>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-sm6">
+					<div class="content">
+						<div class="content-left">
+							<img src="../3rd/res/static/img/home_img3.jpg">
+						</div>
+						<div class="content-right">
+							<p class="label" style="font-size: 35px;">贴心呵护</p>
+							<span></span>
+							<p style="font-size: 20px;">专业医护人员为您提供更优质的呵护。</p>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-sm6">
+					<div class="content">
+						<div class="content-left">
+							<img src="../3rd/res/static/img/home_img4.jpg">
+						</div>
+						<div class="content-right">
+							<p class="label" style="font-size: 35px;">数据分析</p>
+							<span></span>
+							<p style="font-size: 20px;">医院引进高科技人体数据分析仪，为您提供更精确的人体数据分析</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="service-more">
+				<a href="healthCheckup.html"
+					style="margin-left: -5%; background: transparent; font-weight: bold; color: #669999; font-size: 50px; font-family: '华文行楷';">专业为您服务，私密贴心呵护，让健康永同行！</a>
+			</div>
+		</div>
+	</div>
+	<div class="foot">
+            <div class="footer_tips">
+                <div class="footer_tips_body" style="padding-left: 165px;">
+                    <ul><li><b>新手指南</b></li><li><a href="/help/us_3.html" target="_blank" rel="external nofollow">新会员注册</a></li><li><a href="/help/us_4.html" target="_blank" rel="external nofollow">用户登录</a></li><li><a href="/help/us_29.html" target="_blank" rel="external nofollow">关于我们</a></li><li><a href="/help/hospitalmap.html" target="_blank" rel="external nofollow">医院大全</a></li><li><a href="/help/sitemap.html" target="_blank" rel="external nofollow">网站地图</a></li></ul><ul><li><b>常见问题</b></li><li><a href="/help/us_6.html" target="_blank" rel="external nofollow">预约流程</a></li><li><a href="/help/us_7.html" target="_blank" rel="external nofollow">检前注意事项</a></li><li><a href="/help/us_8.html" target="_blank" rel="external nofollow">体检流程</a></li></ul><ul><li><b>售后服务</b></li><li><a href="/help/us_9.html" target="_blank" rel="external nofollow">退款规则</a></li><li><a href="/help/us_10.html" target="_blank" rel="external nofollow">修改预约信息</a></li><li><a href="/help/us_325.html" target="_blank" rel="external nofollow">用户注册使用协议</a></li><li><a href="/yszx.html" target="_blank" rel="external nofollow">检后咨询</a></li></ul><ul><li><b>机构服务</b></li><li><a href="/help/us_12.html" target="_blank" rel="external nofollow">机构入驻</a></li><li><a href="/help/us_13.html" target="_blank" rel="external nofollow">企业团检</a></li><li><a href="/help/us_14.html" target="_blank" rel="external nofollow">渠道合作</a></li><li><a href="/help/us_309.html" target="_blank" rel="external nofollow">专家专栏</a></li></ul>
+                    <ul class="footer_code">
+                        <li><b>微信公众号</b></li>
+                        <li><em>扫码关注：</em><img src="../img/wxcodebottom.jpg" width="109" height="109"></li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div> 
+	
+ 	<div class="dialogue-wrapper" >
+		<div id="btn_open" class="dialogue-support-btn">
+			<i class="dialogue-support-icon"></i> <i
+				class="dialogue-support-line"></i> <span
+				class="dialogue-support-text">导航</span>
+		</div>
+		<div class="dialogue-main" >
+			<div class="dialogue-header">
+			&nbsp;
+				<i id="btn_close" class="dialogue-close" style=" cursor: pointer;">></i>
+				<div class="dialogue-service-info">
+					<div class="dialogue-service-title">
+						<p class="dialogue-service-name">自助咨询</p>
+					</div>
+				</div>
+			</div>
+			<div id="dialogue_contain" class="dialogue-contain">
+			
+			</div>
+			<div class="dialogue-submit" style="background-color: #fff">
+				<p id="dialogue_hint" class="dialogue-hint" style="height: 23px">
+					<span class="dialogue-hint-icon">!</span>
+					<spanclass="dialogue-hint-text">发送内容不能为空</span>
+				</p>
+				<textarea id="dialogue_input" class="dialogue-input-text"
+					placeholder="请输入您的问题" style="margin: 0px 0px 30px 0px; height: 50px"></textarea>
+				<div class="dialogue-input-tools" style="text-align:center;line-height:50px">
+				<button type="button" id="send">发送</button>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<script>
+		layui.config({
+			base : '../3rd/res/static/js/'
+		}).use('firm');
+	</script>
+	
+</body>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../3rd/zui/3rd/zui/js/zui.min.js"></script>
+<script src="../js/healthCheckup.js"></script>
+ <script src="../js/chat.js"></script>  
+
+</html>

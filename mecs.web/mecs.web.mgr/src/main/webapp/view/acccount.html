@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="../3rd/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../3rd/admin/js/xadmin.js"></script>
+
+</head>
+<body>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card" style="height: 535px;">
+					<div class="layui-card-body ">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+
+								<div class="layui-inline layui-show-xs-block"
+									style="margin-left: -170px; width: 1360px;">
+									<div class="layui-form-item layui-inline">
+										<label class="layui-form-label"
+											style="height: 30px; padding: 5px">卡号</label>
+										<div class="layui-input-inline">
+											<input id='cardNum' style="height: 30px; width: 100px;"
+												type="text" name="cardNum" lay-verify="required"
+												placeholder="请输入卡号" autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-input-inline">
+										<button class="layui-btn layui-btn-sm layui-inline "
+											style="margin-left: -95px;"
+											onclick='cardReader()'>
+											<i class="layui-icon layui-icon-search layui-inline"> 读卡</i>
+										</button>
+										</div>
+										<div class="layui-inline" "
+											id="actionBar1">
+											<label class="layui-form-label"
+												style="height: 30px; padding: 5px; margin-left: -216px;width:50px">操作时间</label>
+											<div class="layui-input-inline" style="width: 100px;margin-left: -158px;">
+												<input type="text" name="date" id="date1" autocomplete="off"
+													placeholder="请输入开始时间" class="layui-input">
+											</div>
+											<label class="layui-form-label"
+												style="height: 30px; padding: 5px; margin-left: -67px;width:20px">至</label>
+											<div class="layui-input-inline" style="width: 100px; margin-left: -40px">
+												<input type="text" name="date2" id="date2"
+													autocomplete="off" placeholder="请输入结束时间"
+													class="layui-input">
+											</div>
+										</div>
+
+										<div id="actionBar2" class="layui-form-item layui-inline "
+											>
+											<label class="layui-form-label"
+												style="height: 30px; padding: 5px; margin-left: -35px;width:55px">对账类型</label>
+											<div class="layui-input-inline">
+												<select id='itemsState'
+													style='border: 1px solid #CCCCCC;; padding: 6px 13px'>
+													<option value="">请选择</option>
+												<!-- 	<option value="0">充值</option>
+													<option value="1">消费</option> -->
+
+												</select>
+											</div>
+
+											<button class="layui-btn layui-btn-sm layui-inline "
+												style="margin-left: -108px;" onclick='select()'>
+												<i class="layui-icon layui-icon-search layui-inline"> 搜索</i>
+											</button>
+											<button
+												class="layui-btn layui-btn-sm layui-btn-danger layui-inline "
+												style="margin-left: -8px;" onclick='cleardata()'>
+												<i class="layui-icon layui-icon-delete layui-inline"> 清空</i>
+											</button>
+										</div>
+
+										<div id="actionBar3" class=" layui-form-item layui-inline "
+											>
+											<label class="layui-form-label "
+												style="height: 30px; padding: 5px;width:39px; margin-left: -40px;">卡余额</label>
+											<div class="layui-input-inline">
+												<input id="balanceinput" style="height: 30px; width: 70px;"
+												disabled="disabled"	type="text" name="balanceinput" lay-verify="required"
+													autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div id="actionBar4" class="layui-form-item layui-inline"
+											style='margin-left: -68px; '>
+											<label class="layui-form-label "
+												style="height: 30px; padding: 6px; margin-left: -85px; width: 20px">元</label>
+										</div>
+										<div id="actionBar5" class="layui-inline"
+											>
+											<label class="layui-form-label"
+												style="height: 30px; padding: 0px; margin-left: -108px">用户：</label>
+											<div class="layui-input-inline" style="width: 100px;">
+												<input style="margin-left: -30px; margin-top: -5px;"
+												disabled="disabled"	type="text" name="user" id="user" autocomplete="off"
+													class="layui-input">
+											</div>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="layui-card-body ">
+						<table id='myTable' class="layui-table "
+							style="width: 100%; margin-top: -55px;text-align:center">
+							<thead  >
+								<tr  class='layui-bg-cyan' >
+									<th width:'25%' style='text-align:center'  >发生时间</th>
+									<th width:'35%' style= 'text-align:center'>具体描述     </th>
+									<th width:'20%' style='text-align:center'>发生金额（元）</th>
+								<th style='text-align:center'>充值/扣费</th></tr>
+							</thead>
+							<tbody id="mecRecord">
+								<tr>
+									<td colspan="4">
+										请先读卡
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div id="pageBtn" class="layui-input-inline"
+							style='margin: -2px 0px 0px 60%; ;'>
+							<button class="layui-btn layui-btn-sm" id="pageBtn1">
+								<i class="layui-icon"></i>
+							</button>
+
+							<button class="layui-btn layui-btn-sm" id="pageBtn2">
+								<i class="layui-icon"></i>
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use('form', function() {
+				var form = layui.form;
+			});
+		</script>
+</body>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/account.js"></script>
+</html>

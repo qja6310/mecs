@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="../3rd/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+ <link rel="stylesheet" href="../css/new_file.css" />
+ 
+<link rel="stylesheet" href="../3rd/res/static/css/index.css">
+ 
+<script src="../3rd/admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../3rd/admin/js/xadmin.js"></script>
+
+</head>
+<body>
+<div class="nav index">
+		<div class="layui-container">
+			<!-- 公司logo -->
+			<div class="nav-logo" style="margin-left: -4%;">
+				<a href="healthCheckup.html"> <span
+					style="background: transparent; font-weight: bold; color: #669999; font-size: 40px; font-family: '华文行楷';">自贡康桥健康体检中心</span>
+				</a>
+			</div>
+			<div class="nav-list">
+				<button>
+					<span></span><span></span><span></span>
+				</button>
+				<ul class="layui-nav" lay-filter=""
+					style="font-weight: bold; font-size: 40px;">
+					<li class="layui-nav-item"><a href="healthCheckup.html">返回首页</a></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="layui-fluid" style='margin-top:70px'>
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card" style="height: 535px;">
+					<div class="layui-card-body ">
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+
+								<div class="layui-inline layui-show-xs-block"
+									style="margin-left: -150px">
+
+									<div class="layui-inline">
+										<label class="layui-form-label"
+										style="height: 30px; padding: 5px; margin-left:10px">发生时间</label>
+										<div class="layui-input-inline" style="width: 150px;">
+											<input type="text" name="date" id="date1" autocomplete="off"
+												placeholder="请输入开始时间" class="layui-input">
+										</div>
+										<label class="layui-form-label"
+										style="height: 30px; padding: 5px; margin-left:-15px;width:20px">至</label>
+										<div class="layui-input-inline" style="width: 150px;">
+											<input type="text" name="date2" id="date2" autocomplete="off"
+												placeholder="请输入结束时间" class="layui-input">
+										</div>
+									</div>
+									<div id='stype' class="layui-form-item layui-inline ">
+										<label class="layui-form-label"
+											style="height: 30px; padding: 5px; margin-left: -30px;width:60px">对账类型</label>
+										<div class="layui-input-inline">
+											<select id='itemsState'
+												style='border: 1px solid #CCCCCC;; padding: 6px 21px'>
+												<option value="">请选择</option>
+											
+											</select>
+										</div>
+
+										<button class="layui-btn layui-btn-sm layui-inline "
+											style="margin-left: -90px;" onclick='select()'>
+											<i class="layui-icon layui-icon-search layui-inline"> 搜索</i>
+										</button>
+										<button
+											class="layui-btn layui-btn-sm layui-btn-danger layui-inline "
+											style="margin-left: -5px;" onclick='cleardata()'>
+											<i class="layui-icon layui-icon-delete layui-inline"> 清空</i>
+										</button>
+										
+
+									</div>
+
+
+									<div id='balance' class="layui-form-item layui-inline"
+										style="margin-left: -68px;">
+										<label class="layui-form-label"
+											style="height: 30px; padding: 5px; margin-left: 50px;">当前卡余额</label>
+										<div class="layui-input-inline">
+											<input id="balanceinput" style="height: 30px; width: 80px;"
+												type="text" name="balanceinput" lay-verify="required"
+												autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div id='unit' class="layui-form-item layui-inline"
+										style='margin-left: -68px; '>
+										<label class="layui-form-label"
+											style="height: 30px; padding: 5px; margin-left: -130px;">元</label>
+									<!-- <button
+											class="layui-btn layui-btn-sm layui-btn-warm layui-inline "
+											style="margin-left: 90%;" onclick='back()' '>
+											<i class="layui-icon layui-icon-return layui-inline"> 返回首页</i>
+									</button> -->
+									
+									</div>
+
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="layui-card-body ">
+						<table id='myTable' class="layui-table "
+							style="width: 100%; margin-top: -45px">
+						</table>
+						<div id="pageBtn" class="layui-input-inline"
+							style='margin: -10px 0px 0px 900px; '>
+							<button class="layui-btn layui-btn-sm" id="pageBtn1">
+								<i class="layui-icon"></i>
+							</button>
+
+							<button class="layui-btn layui-btn-sm" id="pageBtn2">
+								<i class="layui-icon"></i>
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		
+			<div class="foot">
+            <div class="footer_tips">
+                <div class="footer_tips_body" style="padding-left: 165px;">
+                    <ul><li><b>新手指南</b></li><li><a href="/help/us_3.html" target="_blank" rel="external nofollow">新会员注册</a></li><li><a href="/help/us_4.html" target="_blank" rel="external nofollow">用户登录</a></li><li><a href="/help/us_29.html" target="_blank" rel="external nofollow">关于我们</a></li><li><a href="/help/hospitalmap.html" target="_blank" rel="external nofollow">医院大全</a></li><li><a href="/help/sitemap.html" target="_blank" rel="external nofollow">网站地图</a></li></ul><ul><li><b>常见问题</b></li><li><a href="/help/us_6.html" target="_blank" rel="external nofollow">预约流程</a></li><li><a href="/help/us_7.html" target="_blank" rel="external nofollow">检前注意事项</a></li><li><a href="/help/us_8.html" target="_blank" rel="external nofollow">体检流程</a></li></ul><ul><li><b>售后服务</b></li><li><a href="/help/us_9.html" target="_blank" rel="external nofollow">退款规则</a></li><li><a href="/help/us_10.html" target="_blank" rel="external nofollow">修改预约信息</a></li><li><a href="/help/us_325.html" target="_blank" rel="external nofollow">用户注册使用协议</a></li><li><a href="/yszx.html" target="_blank" rel="external nofollow">检后咨询</a></li></ul><ul><li><b>机构服务</b></li><li><a href="/help/us_12.html" target="_blank" rel="external nofollow">机构入驻</a></li><li><a href="/help/us_13.html" target="_blank" rel="external nofollow">企业团检</a></li><li><a href="/help/us_14.html" target="_blank" rel="external nofollow">渠道合作</a></li><li><a href="/help/us_309.html" target="_blank" rel="external nofollow">专家专栏</a></li></ul>
+                    <ul class="footer_code">
+                        <li><b>微信公众号</b></li>
+                        <li><em>扫码关注：</em><img src="../img/wxcodebottom.jpg" width="109" height="109"></li>
+                    </ul>
+                    
+                </div>
+            </div>
+            </div> 
+            
+		<script>
+			layui.use('form', function() {
+				var form = layui.form;
+			});
+		</script>
+</body>
+<script src="../3rd/js/jquery.min.js"></script>
+<script src="../js/account.js"></script>
+</html>

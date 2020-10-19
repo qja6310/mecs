@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+<meta charset="UTF-8" >
+
+<link rel="stylesheet" href="../3rd/admin/css/font.css">
+<link rel="stylesheet" href="../3rd/admin/css/xadmin.css">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../3rd/admin/js/xadmin.js"></script>
+  
+</head>
+<body >
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card" style="height: 535px;">
+					<div class="layui-card-body ">
+							<div class="layui-form-item">
+							<div class="layui-input-block" >
+								
+							<div class="layui-inline layui-show-xs-block"style="margin-left: -170px">
+								<div class="layui-form-item layui-inline">
+								    <label class="layui-form-label"style="height: 30px;padding: 5px ">卡号</label>
+								    <div class="layui-input-inline">
+								      <input id='cardNum'style="height: 30px ;width: 120px;" type="text" name="cardNum" lay-verify="required" placeholder="请输入卡号" autocomplete="off" class="layui-input">
+								    </div>
+								  	
+									<button class="layui-btn layui-btn-sm layui-inline " style="margin-left: -75px;" onclick='cardReader()'>
+										<i class="layui-icon layui-icon-search layui-inline" > 读卡</i>  
+									</button>
+								</div>
+					
+							
+							    <div id='state'class="layui-form-item layui-inline "style='margin-left:23px'>
+								    <label class="layui-form-label"style="height: 30px;width:50px;padding: 5px;margin-left: -50px;">项目状态</label>
+								    <div class="layui-input-inline">
+								    	<select id='itemsState' style='border: 1px solid #CCCCCC; ;padding:5px 15px'>
+											<option value="">请选择</option>
+											<!-- <option value="1">未结算</option>
+											<option value="2">已结算</option>
+											<option value="3">已体检</option>
+											<option value="4">已取消</option>
+											<option value="5">已接收</option> -->
+										</select>
+								    </div>
+								  	
+									<button class="layui-btn layui-btn-sm layui-inline " style="margin-left: -105px;" onclick='select()'>
+										<i class="layui-icon layui-icon-search layui-inline" > 搜索</i>  
+									</button>
+									<button class="layui-btn layui-btn-sm layui-btn-danger layui-inline " style="margin-left: -10px;" onclick='cleardata()'>
+										<i class="layui-icon layui-icon-delete layui-inline" > 清空</i>  
+									</button>
+									
+								</div>
+								
+							    <div id='name' class="layui-form-item layui-inline"style="margin-left: -35px;">
+								    <label class="layui-form-label"style="height: 30px;padding: 5px ;width:30px">姓名</label>
+								    <div class="layui-input-inline">
+								      <input id = 'username'disabled="true" style="height: 30px ;width: 100px;" type="text" name="username" lay-verify="required" autocomplete="off" class="layui-input">
+								    </div>
+								</div>
+								  <div id='balance' class="layui-form-item layui-inline"style="margin-left: -78px;">
+								    <label class="layui-form-label"style="height: 30px;padding: 5px ;margin-left: -90px;">余额</label>
+								    <div class="layui-input-inline">
+								      <input id = "balanceinput"style="height: 30px ;width: 80px;" type="text" name="balanceinput" lay-verify="required" autocomplete="off" class="layui-input">
+								    </div>
+								  </div>
+								   <div id='unit' class="layui-form-item layui-inline"style='margin-left: -0px;'>
+								    <label class="layui-form-label"style="height: 30px;    margin-top: -58px;    margin-left: 810px;">元</label>
+								  </div>
+		
+							 
+							 </div>
+							
+							</div>
+						   </div>
+					</div>
+					<div class="layui-card-body ">
+						<table id='myTable'class="layui-table " 
+							style="width: 100%;margin-top:-70px;text-align:center">
+							<thead  >
+							  <tr  class='layui-bg-cyan' >
+							  <th  style='text-align:center' width:'20%' >体检项目</th>
+							  <th style='text-align:center'width:'20%'>价格（元）</th>
+							  <th style='text-align:center'width:'20%'>项目状态</th>
+							  <th style='text-align:center'width:'20%'>开单时间</th>
+							  <th style='text-align:center'width:'20%'>操作</th>
+							  </tr>
+							</thead>
+							
+						</table>
+						<div  id="pageBtn" class="layui-input-inline" 
+							style='margin: -2px 0px 0px 600px;'>
+							<button class="layui-btn layui-btn-sm" id="pageBtn1">
+								<i class="layui-icon"></i>
+							</button>
+
+							<button class="layui-btn layui-btn-sm" id="pageBtn2">
+								<i class="layui-icon"></i>
+							</button>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		layui.use('form', function() {
+			var form = layui.form;
+		});
+	</script>
+	
+</body>
+	<script src="../3rd/js/jquery.min.js"></script>
+	<script src="../js/backMoney.js"></script>
+	<script type="text/javascript">
+	</script>
+</html>

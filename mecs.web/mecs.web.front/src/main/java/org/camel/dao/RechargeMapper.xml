@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.RechargeMapper">
+
+	<select id="checkAccountOrderNum" resultType="java.lang.String">
+		SELECT AO_ID FROM T_ACCOUNT_ORDER WHERE AO_NUMBER = #{aoNum}
+	</select>
+
+	<insert id="addAccountOrder">
+		INSERT INTO T_ACCOUNT_ORDER
+		VALUES(SEQ_ACCOUNT_ORDER.NEXTVAL,#{aoNum},#{aoName},#{aoPay},#{aoRemark},#{cardNum},SYSDATE,SYSDATE)
+	</insert>
+
+	<insert id="changeCardBalance">
+		UPDATE T_CARD SET CA_BALANCE =
+		(#{aoPay} + (SELECT CA_BALANCE FROM T_CARD WHERE CA_NUMBER = #{cardNum}))
+		WHERE CA_NUMBER = #{cardNum}
+	</insert>
+	
+	<insert id="addAccount">
+		INSERT INTO T_ACCOUNT VALUES(SEQ_ACC.NEXTVAL,#{cardNum},0,#{accRemark},#{accMoney},NULL,SYSDATE)
+	</insert>
+
+	<insert id="addFrontLog" parameterType="mecs.camel.model.Log">
+		INSERT INTO
+		T_FRONTLOG (FL_ID,FL_US_ID,FL_TYPE,FL_REMARK,FL_CREATE_TIME)
+		VALUES
+		(SEQ_MGRLOG.NEXTVAL,#{logUserId},#{logType},#{logRemark},SYSDATE)
+	</insert>
+
+	<select id="getUserIdByCrdNum" resultType="java.lang.String">
+		SELECT CA_USER_ID FROM T_CARD WHERE CA_NUMBER = #{cardNum}
+	</select>
+	
+	<select id="getBalanceByCardNum" resultType="java.lang.String">
+		SELECT CA_BALANCE FROM T_CARD WHERE CA_NUMBER = #{cardNum}
+	</select>
+
+</mapper>

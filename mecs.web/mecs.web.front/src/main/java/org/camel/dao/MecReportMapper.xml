@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.MecReportMapper">
+	<resultMap type="mecs.camel.model.MecRecord" id="mrResultMap">
+		<result column="MR_NUMBER" property="mrNum" />
+		<result column="MR_CO_NAME" property="comboName" />
+		<result column="MR_PRICE" property="mrPrice" />
+		<result column="DI_NAME" property="mrState" />
+		<result column="BILTIME" property="bilTime" />
+	</resultMap>
+
+	<!-- 根据卡号或者体检号码获取体检记录 -->
+	<select id="getMecRecord" resultMap="mrResultMap">
+		SELECT M.MR_NUMBER,M.MR_CO_NAME,M.MR_PRICE,
+		TO_CHAR(M.MR_BIL_TIME,'YYYY-MM-DD HH24:MI:SS') AS BILTIME,D.DI_NAME
+		FROM T_MEC_RECORD M INNER JOIN T_CARD C ON C.CA_ID = M.MR_CA_ID
+		INNER JOIN T_DICT D ON D.DI_CODE = M.MR_STATE
+		WHERE D.DI_TYPE = 'MECSTATE'
+		<if test="cardNum != null and cardNum != ''">
+			AND C.CA_NUMBER = #{cardNum}
+		</if>
+		<if test="mecCode != null and mecCode != ''">
+			AND M.MR_NUMBER = #{mecCode}
+		</if>
+		ORDER BY BILTIME DESC
+	</select>
+</mapper>

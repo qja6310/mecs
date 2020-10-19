@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../3rd/layui/css/layui.css">
+<script src="../3rd/layui/layui.js"></script>
+
+<!--修改下拉框的值 -->
+<style type="text/css">
+	.layui-form-select .layui-input{
+		width:180px;height:30px;
+	}
+</style>
+
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin" id="bigDiv">
+		<div class="layui-body" style="left: 15px; top:15px; right: 25px;">
+		
+			<!-- 内容主体区域 -->
+				<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+				<legend style="font-weight: bold;">卡片操作</legend>
+					<div class="layui-form-item">
+						 <div class="layui-inline" style="top: 4px;">
+								<label class="layui-form-label" style="top: -2px;">输入卡号</label>
+								<div class="layui-input-block">
+									<input type="text" name="cardNum" id="cardNum" autocomplete="off" class="layui-input" style="height: 30px;">
+								</div>
+						  </div>
+						  
+						  <div class="layui-inline" style="top: 4px;">
+				 		  		
+								<label class="layui-form-label" style="top: -2px;">充值金额</label>
+								<div class="layui-input-block">
+									<input  type="text" type="text" name="cardMoney" id="cardMoney" autocomplete="off" class="layui-input" style="height: 30px;">
+								</div>
+						  </div>
+						  
+						  <div class="layui-inline" style="top: 4px;">
+								<label class="layui-form-label" style="top: -2px;">现有卡号</label>
+								<div class="layui-input-block" style="padding-top: 5%">
+									<span id="cardIdShow"></span>
+								</div>
+						 </div>
+				   </div>
+				</fieldset>   
+			   
+			   <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+			   <legend style="font-weight: bold;">用户信息</legend>
+					   <div class="layui-form-item">
+							<div class="layui-inline" style="top: 4px;">
+										<label class="layui-form-label" style="top: -2px;">姓名</label>
+										<div class="layui-input-block">
+											<input type="text" name="userName" id="userName" autocomplete="off" class="layui-input" style="height: 30px;">
+										</div>
+							</div>
+							
+							<div class="layui-inline" style="top: 4px;">
+									    <label class="layui-form-label"  style="top: -2px;">性别</label>
+									    <div class="layui-input-block" >
+											<select name="userSex" id="userSex" lay-verify=""
+											style="width: 180px; height: 30px; font-size: 15px;border: 0px"
+											>
+											  <option value="">请选择</option>
+											  <option value="1">男</option>
+											  <option value="0">女</option>
+											</select>   
+									    </div> 
+							</div> 	
+							
+							<div class="layui-inline" style="top: 4px;">
+								    <label class="layui-form-label"  style="top: -2px;">血型</label>
+								    <div class="layui-input-block">
+										<select name="userBloodType" id="userBloodType"  lay-verify="" 
+										style="width: 180px; height: 30px; font-size: 15px;border: 0px"
+										>
+										  <option value="0">请选择</option>
+										  <option value="1">A型</option>
+										  <option value="2">B型</option>
+										  <option value="3">O型</option>
+										  <option value="4">AB型</option>
+										</select>   
+								    </div> 
+							</div> 
+					 </div>
+					
+					<div class="layui-form-item">
+						<div class="layui-inline" style="top: 13px;">
+							<label class="layui-form-label">出生日期</label>
+							<div class="layui-input-block">
+								<input type="text" name="date" id="date1" placeholder="点击选择日期"
+									autocomplete="off" class="layui-input"style="width: 183px;height: 30px;" readonly="readonly" >
+							</div>
+						</div>
+						
+						
+						<div class="layui-inline" style="top: 13px;">
+								<label class="layui-form-label" style="top: -2px;">手机号码</label>
+								<div class="layui-input-block">
+								<!--  限制输入11位数字-->
+									<input maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"
+									type="text" name="userPhone" id="userPhone" autocomplete="off" class="layui-input" style="height: 30px;">
+								</div>
+						</div>
+			
+					</div>
+					
+					
+					<div class="layui-form-item">
+						<div class="layui-inline" style="top: 4px;">
+							<label class="layui-form-label" style="top: -2px;">住址</label>
+							<div class="layui-input-block" style="width:55.5%">
+								<input type="text" name="userAddress" id="userAddress" autocomplete="off" class="layui-input" style="height: 30px;width:300%"">
+							</div>
+						</div>
+					
+					</div>
+					
+					
+					<div class="layui-form-item ">
+						
+						<div class="layui-inline" style="top: 4px;">
+							        <!-- <form class="layui-form"> -->
+							       		 <!-- layui-form 这个一定要加，不然选了省之后，无法跳到响应的 -->
+							            <div class="layui-form-item layui-form">
+							                <!-- <label class="layui-form-label">籍贯</label> -->
+							                <!-- 微调 -->
+							                <label class="layui-form-label" style="top: -2px;">籍贯</label>
+							                <div class="layui-input-inline">
+							                  	<!--原来的  -->
+							                    <!-- <select id="province" size="1" onchange="getCity()" style="width: 120px; height: 40px;"> -->
+												<!-- 这里style的宽高没修改到 是head那边修改的 -->
+												<select name="province" id="province" lay-filter="province"
+												style="width: 180px; height: 30px; font-size: 15px;border: 0px"
+												> 
+													<option value=0>北京</option>
+													<option value=1>上海</option>
+													<option value=2>天津</option>
+													<option value=3>重庆</option>
+													<option value=4>河北</option>
+													<option value=5>山西</option>
+													<option value=6>内蒙古</option>
+													<option value=7>辽宁</option>
+													<option value=8>吉林</option>
+													<option value=9>黑龙江</option>
+													<option value=10>江苏</option>
+													<option value=11>浙江</option>
+													<option value=12>安徽</option>
+													<option value=13>福建</option>
+													<option value=14>江西</option>
+													<option value=15>山东</option>
+													<option value=16>河南</option>
+													<option value=17>湖北</option>
+													<option value=18>湖南</option>
+													<option value=19>广东</option>
+													<option value=20>广西</option>
+													<option value=21>海南</option>
+													<option value=22>四川</option>
+													<option value=23>贵州</option>
+													<option value=24>云南</option>
+													<option value=25>西藏</option>
+													<option value=26>陕西</option>
+													<option value=27>甘肃</option>
+													<option value=28>宁夏</option>
+													<option value=29>青海</option>
+													<option value=30>新疆</option>
+													<option value=31>香港</option>
+													<option value=32>澳门</option>
+													<option value=33>台湾</option>
+							                    </select>
+							                </div>
+							                <div class="layui-input-inline">
+							                    <!--原来的-->
+							                   <!--  <select id="city" style="width: 120px; height: 40px;"> -->
+							                    <select name="city" id="city" lay-filter="city"
+							                    style="width: 180px; height: 30px; font-size: 15px;border: 0px"
+							                    > 
+							                    </select>
+							                </div>
+							                
+							                <!-- 区不用了-->
+							               <!--  <div class="layui-input-inline">
+							                    <select name="areaid" id="areaid" lay-filter="areaid">
+							                        <option value="">请选择县/区</option>
+							                    </select>
+							                </div> -->
+							            </div>
+							        <!-- </form> -->
+							    </div>
+					
+					</div>
+			
+					<div class="layui-form-item">
+						<div class="layui-inline" style="top: -10px;width:55.5%">
+						    		<label class="layui-form-label" style="top: -10px;">备注</label>
+						    		<div class="layui-input-block" >
+						    			<textarea id="textareaID" name="" required lay-verify="required" placeholder="" class="layui-textarea" rows=1 cols=50 ></textarea>
+					    			</div>
+					     </div>
+					</div>
+			</fieldset> 
+					<div class="layui-form-item">
+						<div class="layui-inline" style="top: 4px;">
+			    			<div class="layui-input-block" >
+					    		<!-- <a href="javascript:void(0);" class="layui-btn" onclick="buildCardCommit()">提交</a> -->
+					    		
+					    		<button onclick="buildCardCommit()" class="layui-btn layuiadmin-btn-admin layui-btn-sm">
+									<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i> 
+									提交
+								</button>
+					    		
+					    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<!-- <a class="layui-btn  layui-btn-danger" onclick="cleanbigDiv()">清空</a> -->
+								
+								<button class="layui-btn layui-btn-danger layuiadmin-btn-admin layui-btn-sm" onclick="cleanbigDiv()">
+								<i class="layui-icon layui-icon-delete layuiadmin-button-btn"></i> 
+								清空
+							</button>
+							</div>	
+						</div>
+					</div>
+				
+				</div>
+	</div>
+	
+</body>
+	<!-- <script src="../3rd/layui/layui.js"> </script> -->
+	<script src="../3rd/js/jquery.min.js"></script>
+	<script src="../js/adminbuildcard.js"></script>
+	<script type="text/javascript"></script>
+</html>

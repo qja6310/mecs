@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.ItemsReceiveMapper">
+	<resultMap type="mecs.camel.model.dto.ItemsRecordDto" id="itemsReceivResultMap">
+		<result column="IR_DEP_ID" property="depId" />
+		<result column="IR_ID" property="irId" />
+		<result column="IR_RES" property="itemsRes" />
+		<result column="IR_ITS_NAME" property="itemsName" />
+		<result column="DEP_NAME" property="dep.depName" />
+		<result column="DI_CODE" property="dict.dictCode" />
+		<result column="DI_NAME" property="dict.dictName" />
+		<result column="IR_ITS_PRICE" property="itemsPrice" />
+	</resultMap>
+		<select id="getItemSRecordCount" resultType="java.lang.Integer">
+		  SELECT 
+            COUNT(*)	      
+          FROM 
+	        T_ITEMS_RECORD I 
+	      LEFT JOIN 
+	        T_MEC_RECORD M 
+	      ON 
+	        M.MR_ID = I.IR_MR_ID 
+	      LEFT JOIN 
+	        T_CARD C 
+	      ON 
+	        C.CA_ID =  M.MR_CA_ID 
+		  LEFT JOIN 
+		    T_DEPARTMENT DE ON DE.DEP_ID = I.IR_DEP_ID
+		  LEFT JOIN 
+		    T_DICT D 
+		  ON 
+		    D.DI_CODE = I.IR_STATE 
+		  WHERE 
+		    D.DI_TYPE='ITEMSSTATE'
+				
+		  AND 
+		    C.CA_NUMBER=#{cardNum}
+		  AND 
+		    DE.DEP_ID = #{admindepId}
+				<if test="itemsState !=null and itemsState != ''">
+					AND I.IR_STATE  = #{itemsState}
+				</if>
+				<if test="itemsName !=null and itemsName != ''">
+					AND I.IR_ITS_NAME  LIKE CONCAT(CONCAT('%',#{itemsName}),'%' )
+				</if>
+		</select>
+		<select id="getItemsRecord" resultMap="itemsReceivResultMap">
+	      SELECT 
+	      	I.IR_DEP_ID,I.IR_ID,I.IR_RES,I.IR_ITS_NAME,DE.DEP_NAME,D.DI_CODE,D.DI_NAME,I.IR_ITS_PRICE
+	      FROM 
+	        T_ITEMS_RECORD I 
+	      LEFT JOIN 
+	        T_MEC_RECORD M 
+	      ON 
+	        M.MR_ID = I.IR_MR_ID 
+	      LEFT JOIN 
+	        T_CARD C 
+	      ON 
+	        C.CA_ID =  M.MR_CA_ID 
+		  LEFT JOIN 
+		    T_DEPARTMENT DE ON DE.DEP_ID = I.IR_DEP_ID
+		  LEFT JOIN 
+		    T_DICT D 
+		  ON 
+		    D.DI_CODE = I.IR_STATE 
+		  WHERE 
+		    D.DI_TYPE='ITEMSSTATE'
+				
+		  AND 
+		    C.CA_NUMBER=#{cardNum}
+		 
+		  AND 
+		    DE.DEP_ID = #{admindepId}
+				<if test="itemsState !=null and itemsState != ''">
+					AND I.IR_STATE  = #{itemsState}
+				</if>
+				<if test="itemsName !=null and itemsName != ''">
+					AND I.IR_ITS_NAME LIKE CONCAT(CONCAT('%',#{itemsName}),'%' )
+				</if>
+		   ORDER BY
+			  I.IR_ID
+		   DESC
+		</select>
+		<update id="itemsReceive">
+		   UPDATE 
+		      T_ITEMS_RECORD
+		   SET 
+		      IR_PE_TIME = SYSDATE,IR_UPDATE_TIME = SYSDATE,IR_STATE = 5 ,IR_DOC_ID = #{docId} 
+		   WHERE 
+		      IR_ID = #{irId}
+		</update>
+		<update id="addResult">
+		   UPDATE 
+		      T_ITEMS_RECORD
+		   SET 
+		      IR_UPDATE_TIME = SYSDATE,IR_STATE = 3 ,IR_RES = #{result} 
+		   WHERE 
+		      IR_ID = #{irId}
+		</update>
+</mapper>

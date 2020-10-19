@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.AdminSystemMapper">
+
+	<resultMap type="mecs.camel.model.dto.MenuDto" id="mdResultMap">
+		<result column="ME_NAME" property="menuName" />
+		<result column="ME_PID" property="menuPid" />
+		<result column="ME_URL" property="menuUrl" />
+		<result column="ME_ICON" property="menuIcon" />
+		<collection property="menuSet" ofType="mecs.camel.model.Menu">
+			<result column="SNAME" property="menuName" />
+			<result column="SPID" property="menuPid" />
+			<result column="SURL" property="menuUrl" />
+			<result column="SICON" property="menuIcon" />
+		</collection>
+	</resultMap>
+
+	<select id="getRoleIdByAdminId" resultType="java.lang.String">
+		SELECT RO.RO_ID FROM T_ROLE RO INNER JOIN T_ADMIN_ROLE_LINK ARL ON
+		ARL.ARL_RO_ID = RO.RO_ID
+		WHERE ARL.ARL_AD_ID = #{adminId}
+	</select>
+
+	<select id="getMenuDtoByRoleId" resultMap="mdResultMap">
+		SELECT M.ME_NAME,M.ME_PID,M.ME_URL,M.ME_ICON,
+		ME.ME_NAME AS SNAME,ME.ME_PID AS SPID,ME.ME_URL AS SURL,ME.ME_ICON AS SICON
+		FROM T_MENU M
+		INNER JOIN T_MENU ME ON ME.ME_PID = M.ME_ID
+		INNER JOIN T_ROLE_MENU_LINK RML ON RML.RML_ME_ID = M.ME_ID
+		WHERE M.ME_PID = 0 AND RML.RML_RO_ID IN
+		<foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">
+			#{roleId}
+		</foreach>
+	</select>
+
+</mapper>

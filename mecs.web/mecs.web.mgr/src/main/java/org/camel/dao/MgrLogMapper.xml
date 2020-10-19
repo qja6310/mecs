@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="org.camel.dao.MgrLogMapper">
+	<resultMap type="mecs.camel.model.Log" id="log">
+		<result column="ML_ID"  property="logId" />
+		<result column="ADNAME"  property="logUserId" />
+		<result column="ML_TYPE"  property="logType"/>
+		<result column="ML_REMARK"  property="logRemark"/>
+		<result column="ML_MEMO"  property="logMemo"/>
+		<result column="CTIME"  property="logCtime"/>
+		
+	</resultMap>
+	<select id="getLog" resultMap="log"> 
+		
+		SELECT ML.ML_ID,AD.AD_NAME AS ADNAME,ML.ML_TYPE,ML.ML_REMARK,ML.ML_MEMO,
+		TO_CHAR(ML.ML_CREATE_TIME,'YYYY-MM-DD HH24:MI:SS') AS CTIME
+		FROM T_MGRLOG ML LEFT JOIN T_ADMIN AD ON ML.ML_AD_ID= AD.AD_ID
+		<where>
+			<if test="beginTime!=null and beginTime!=''">
+			AND ML.ML_CREATE_TIME &gt;=TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endTime!=null and endTime!=''">
+			AND ML.ML_CREATE_TIME &lt;=TO_DATE(CONCAT(#{endTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="name!=null and name!=''">
+			AND AD.AD_NAME like CONCAT(CONCAT('%',#{name}),'%') 
+			</if>
+		</where>
+		
+	</select>
+	<select id="getAllCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS MYCOUNT FROM T_MGRLOG ML LEFT JOIN T_ADMIN AD ON ML.ML_AD_ID= AD.AD_ID
+		<where>
+			<if test="beginTime!=null and beginTime!=''">
+			AND ML.ML_CREATE_TIME &gt;=TO_DATE(CONCAT(#{beginTime},' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="endTime!=null and endTime!=''">
+			AND ML.ML_CREATE_TIME &lt;=TO_DATE(CONCAT(#{endTime},' 23:59:59'),'YYYY-MM-DD HH24:MI:SS')
+			</if>
+			<if test="name!=null and name!=''">
+			AND AD.AD_NAME like CONCAT(CONCAT('%',#{name}),'%') 
+			</if>
+		</where>
+	</select>	
+	 <delete id="delLog" >
+		DELETE FROM T_MGRLOG WHERE ML_ID  IN (
+			<foreach collection="logIdList" item="mlId" separator=",">
+			#{mlId}
+			</foreach>
+		)
+	</delete> 
+
+</mapper>

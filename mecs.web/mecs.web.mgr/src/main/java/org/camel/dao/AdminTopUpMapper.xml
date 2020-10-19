@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.camel.dao.AdminTopUpMapper">
+	
+	<select id="queryCardBalance" resultType="java.lang.Integer">
+		SELECT CA_BALANCE FROM T_CARD WHERE CA_NUMBER=#{cardNum}
+	</select>
+	
+
+	<update id="topUp">
+		UPDATE T_CARD SET  CA_BALANCE=#{newMoney} WHERE CA_NUMBER=#{cardNum}
+	</update>
+	
+	
+	
+</mapper>
